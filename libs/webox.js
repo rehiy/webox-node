@@ -55,11 +55,11 @@ let httpTryFile = function (temp) {
     }
     //文件不存在
     return [filePath, ''];
-}
+};
 
 let httpServer = http.createServer(function (request, response) {
     let [filePath, realPath] = httpTryFile(request.url);
-    echo('Request URL: ' + request.url);
+    echo('Request URL:', request.url);
     //找不到文件
     if (realPath === '') {
         httpMessage(response, 404, filePath);
@@ -84,8 +84,8 @@ let httpServer = http.createServer(function (request, response) {
 
 httpServer.on('error', function (err) {
     if (err.code == 'EADDRINUSE') {
-        echo('Port is occupied:', WEBOX_HOST, WEBOX_PORT, '\n');
-        echo('Try other port:', WEBOX_HOST, ++WEBOX_PORT);
+        echo('IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
+        echo('Failover:', WEBOX_HOST, ++WEBOX_PORT, '\n');
         httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
     }
 });
