@@ -2,7 +2,7 @@
     "name": "webox-node",
     "description": "a mini web server",
     "homepage": "http://www.anrip.com",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "author": {
         "name": "Anrip Wong",
         "email": "mail@anrip.com",
@@ -13,7 +13,8 @@
         "simple",
         "http",
         "web",
-        "server"
+        "server",
+        "webox"
     ],
     "repository": {
         "type": "git",

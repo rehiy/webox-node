@@ -1,4 +1,12 @@
-module.exports = {
+let path = require('path');
+
+module.exports = function (file) {
+    let ext = path.extname(file);
+    ext = ext ? ext.slice(1) : 'unknown';
+    return mime[ext] || 'application/octet-stream';
+}
+
+let mime = {
     '3gp': 'video/3gpp',
     'a': 'application/octet-stream',
     'ai': 'application/postscript',

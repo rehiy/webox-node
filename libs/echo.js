@@ -1,3 +1,9 @@
+module.exports = function () {
+    let arg1 = ['[' + dateFormat('hh:mm:ss') + ']', 'Webox -'];
+    let arg2 = Array.prototype.slice.call(arguments);
+    console.log.apply(null, arg1.concat(arg2));
+};
+
 function dateFormat(fmt) {
     let d = new Date();
     let o = {
@@ -19,10 +25,3 @@ function dateFormat(fmt) {
     }
     return fmt;
 }
-
-module.exports = function () {
-    let arg1 = ['[' + dateFormat('hh:mm:ss') + ']', 'Webox -'];
-    let arg2 = Array.prototype.slice.call(arguments);
-
-    console.log.apply(null, arg1.concat(arg2));
-};

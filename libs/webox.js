@@ -8,7 +8,7 @@ let echo = require('./echo');
 let mime = require('./mime');
 
 /////////////////////////////////////////////////////////////
-// create server
+// build config
 
 let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT || 'webroot');
 
@@ -19,7 +19,16 @@ let WEBOX_INDEX = process.env.WEBOX_INDEX || [
     'index.html', 'index.htm'
 ];
 
+let WEBOX_ERROR = process.env.WEBOX_INDEX || {
+    404: 'File Not Found: %s',
+    500: 'Server Internal Error: %s'
+};
+
+/////////////////////////////////////////////////////////////
+// create server
+
 let httpMessage = function (response, code, text) {
+    text = WEBOX_ERROR[code].replace('%s', text);
     response.writeHead(code, {
         'Content-Type': 'text/plain'
     });
@@ -48,25 +57,22 @@ let httpTryFile = function (temp) {
     return [filePath, ''];
 }
 
-let webox = http.createServer(function (request, response) {
+let httpServer = http.createServer(function (request, response) {
     let [filePath, realPath] = httpTryFile(request.url);
     echo('Request URL: ' + request.url);
     //找不到文件
     if (realPath === '') {
-        httpMessage(response, 404, 'File Not Found: ' + filePath);
-        return false;
+        httpMessage(response, 404, filePath);
+        return 404;
     }
-    //获取扩展名
-    let ext = path.extname(realPath);
-    ext = ext ? ext.slice(1) : 'unknown';
     //发送头信息
     response.writeHead(200, {
-        'Content-Type': mime[ext] || 'application/octet-stream'
+        'Content-Type': mime(realPath)
     });
     //尝试读取文件
     fs.createReadStream(realPath)
         .on('error', function (err) {
-            httpMessage(response, 500, 'Server Internal Error: ' + filePath);
+            httpMessage(response, 500, filePath);
         })
         .on('data', function (chunk) {
             response.write(chunk);
@@ -76,22 +82,22 @@ let webox = http.createServer(function (request, response) {
         });
 });
 
-webox.on('error', function (err) {
+httpServer.on('error', function (err) {
     if (err.code == 'EADDRINUSE') {
         echo('Port is occupied:', WEBOX_HOST, WEBOX_PORT, '\n');
         echo('Try other port:', WEBOX_HOST, ++WEBOX_PORT);
-        webox.listen(WEBOX_PORT, WEBOX_HOST, 1024);
+        httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
     }
 });
 
-webox.on('listening', function () {
+httpServer.on('listening', function () {
     let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
     let port = WEBOX_PORT === '80' ? '' : ':' + WEBOX_PORT;
-    echo('Service started:', 'http://' + host + port);
-    echo('Website Root Directory:', WEBOX_ROOT);
+    echo('Server started:', 'http://' + host + port);
+    echo('Root Directory:', WEBOX_ROOT, '\n');
 });
 
 /////////////////////////////////////////////////////////////
 // start server
 
-webox.listen(WEBOX_PORT, WEBOX_HOST, 1024);
+httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
