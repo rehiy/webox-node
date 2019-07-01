@@ -28,29 +28,32 @@ let httpMessage = function (response, code, text) {
 };
 
 let httpTryFile = function (temp) {
-    let namePath = url.parse(temp).pathname;
-    let realPath = path.join(WEBOX_ROOT, namePath);
-    if (fs.lstatSync(realPath).isFile()) {
-        return [namePath, realPath];
+    let filePath = url.parse(temp).pathname;
+    let realPath = path.join(WEBOX_ROOT, filePath);
+    let pathStat = fs.existsSync(realPath) && fs.lstatSync(realPath);
+    //文件存在直接返回
+    if (pathStat && pathStat.isFile()) {
+        return [filePath, realPath];
     }
     //尝试返回默认首页
-    for (let index of WEBOX_INDEX) {
-        let real = path.join(realPath, index);
-        if (fs.existsSync(real)) {
-            let name = namePath + '/' + index;
-            return [name, real];
+    if (pathStat && pathStat.isDirectory()) {
+        for (let index of WEBOX_INDEX) {
+            let real = path.join(realPath, index);
+            if (fs.existsSync(real)) {
+                return [filePath + '/' + index, real];
+            }
         }
     }
     //文件不存在
-    return [namePath, ''];
+    return [filePath, ''];
 }
 
 let webox = http.createServer(function (request, response) {
-    let [namePath, realPath] = httpTryFile(request.url);
+    let [filePath, realPath] = httpTryFile(request.url);
     echo('Request URL: ' + request.url);
     //找不到文件
     if (realPath === '') {
-        httpMessage(response, 404, 'File Not Found: ' + namePath);
+        httpMessage(response, 404, 'File Not Found: ' + filePath);
         return false;
     }
     //获取扩展名
@@ -63,7 +66,7 @@ let webox = http.createServer(function (request, response) {
     //尝试读取文件
     fs.createReadStream(realPath)
         .on('error', function (err) {
-            httpMessage(response, 500, 'Server Internal Error: ' + namePath);
+            httpMessage(response, 500, 'Server Internal Error: ' + filePath);
         })
         .on('data', function (chunk) {
             response.write(chunk);
