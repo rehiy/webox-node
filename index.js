@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-// code from www.anrip.com
-
 'use strict';
 
 var path = require('path');
@@ -25,6 +23,7 @@ process.once('exit', function (code) {
 });
 
 /////////////////////////////////////////////////////////////
+// code from www.anrip.com
 
 var mime = require('./mime');
 
