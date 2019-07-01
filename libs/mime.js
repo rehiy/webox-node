@@ -1,11 +1,5 @@
 let path = require('path');
 
-module.exports = function (file) {
-    let ext = path.extname(file);
-    ext = ext ? ext.slice(1) : 'unknown';
-    return mime[ext] || 'application/octet-stream';
-}
-
 let mime = {
     '3gp': 'video/3gpp',
     'a': 'application/octet-stream',
@@ -174,3 +168,9 @@ let mime = {
     'zip': 'application/zip',
     'mf': 'text/cache-manifest'
 };
+
+module.exports = function (file) {
+    let ext = path.extname(file);
+    ext = ext ? ext.slice(1) : 'unknown';
+    return mime[ext] || 'application/octet-stream';
+}
