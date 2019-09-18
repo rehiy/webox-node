@@ -1,8 +1,9 @@
 {
     "name": "webox-node",
     "description": "a mini web server",
-    "homepage": "http://www.anrip.com",
+    "homepage": "https://github.com/anrip/webox-node",
     "version": "1.1.0",
+    "license": "MIT License",
     "author": {
         "name": "Anrip Wong",
         "email": "mail@anrip.com",
@@ -21,7 +22,6 @@
         "url": "git://github.com/anrip/webox-node.git"
     },
     "dependencies": {},
-    "license": "MIT",
     "main": "index.js",
     "bin": {
         "webox": "./index.js"
