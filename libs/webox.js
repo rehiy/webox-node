@@ -32,19 +32,28 @@ let WEBOX_ERROR = process.env.WEBOX_INDEX || {
 let httpMessage = function (response, code, text) {
     text = WEBOX_ERROR[code].replace('%s', text);
     response.writeHead(code, {
-        'Content-Type': 'text/plain; charset=utf-8'
+        'Content-Type': 'text/plain'
     });
     response.write(text);
     response.end();
 };
 
 let HttpModjs = function (response, mjs) {
-    let pf = exec(`${process.argv0} ${mjs}`);
+    response.writeHead(200, {
+        'Content-Type': 'text/plain'
+    });
+    let pf = exec(`${process.argv0} ${mjs}`, {
+        windowsHide: true,
+        timeout: 60000
+    });
     pf.stdout.on('data', function (data) {
-        httpMessage(response, 200, data);
+        response.write(data);
     });
     pf.stderr.on('data', function (data) {
-        httpMessage(response, 500, data);
+        response.write('Error:' + data);
+    });
+    pf.on('exit', function (code) {
+        response.end();
     });
 };
 
@@ -79,8 +88,7 @@ let httpServer = http.createServer(function (request, response) {
     }
     //运行js模块
     if (filePath.match(/\.mjs$/)) {
-        HttpModjs(response, realPath);
-        return 200;
+        return HttpModjs(response, realPath);
     }
     //尝试读取文件
     fs.createReadStream(realPath)
