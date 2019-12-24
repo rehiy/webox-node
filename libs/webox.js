@@ -1,5 +1,6 @@
 let fs = require('fs');
 let path = require('path');
+let exec = require('child_process').exec;
 
 let url = require('url');
 let http = require('http');
@@ -20,6 +21,7 @@ let WEBOX_INDEX = process.env.WEBOX_INDEX || [
 ];
 
 let WEBOX_ERROR = process.env.WEBOX_INDEX || {
+    200: '%s',
     404: 'File Not Found: %s',
     500: 'Server Internal Error: %s'
 };
@@ -30,10 +32,20 @@ let WEBOX_ERROR = process.env.WEBOX_INDEX || {
 let httpMessage = function (response, code, text) {
     text = WEBOX_ERROR[code].replace('%s', text);
     response.writeHead(code, {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'text/plain; charset=utf-8'
     });
     response.write(text);
     response.end();
+};
+
+let HttpModjs = function (response, mjs) {
+    let pf = exec(`${process.argv0} ${mjs}`);
+    pf.stdout.on('data', function (data) {
+        httpMessage(response, 200, data);
+    });
+    pf.stderr.on('data', function (data) {
+        httpMessage(response, 500, data);
+    });
 };
 
 let httpTryFile = function (temp) {
@@ -65,16 +77,20 @@ let httpServer = http.createServer(function (request, response) {
         httpMessage(response, 404, filePath);
         return 404;
     }
-    //发送头信息
-    response.writeHead(200, {
-        'Content-Type': mime(realPath)
-    });
+    //运行js模块
+    if (filePath.match(/\.mjs$/)) {
+        HttpModjs(response, realPath);
+        return 200;
+    }
     //尝试读取文件
     fs.createReadStream(realPath)
         .on('error', function (err) {
             httpMessage(response, 500, filePath);
         })
         .on('data', function (chunk) {
+            response.writeHead(200, {
+                'Content-Type': mime(realPath)
+            });
             response.write(chunk);
         })
         .on('end', function () {
