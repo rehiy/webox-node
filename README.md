@@ -23,3 +23,7 @@ npx webox 0.0.0.0:80 public
 The web server will listen on `0.0.0.0:80` and use `./public` as the root directory.
 
 Other users can use your internal ip to access your published site.
+
+## dynamic js module
+
+Dynamically parse `*.mjs` and output the result to browser.
