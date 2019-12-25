@@ -23,7 +23,7 @@ let WEBOX_INDEX = process.env.WEBOX_INDEX || [
 let WEBOX_ERROR = process.env.WEBOX_INDEX || {
     200: '%s',
     404: 'File Not Found: %s',
-    500: 'Server Internal Error: %s'
+    503: 'Server Internal Error: %s'
 };
 
 /////////////////////////////////////////////////////////////
@@ -38,66 +38,70 @@ let httpMessage = function (response, code, text) {
     response.end();
 };
 
-let HttpModjs = function (response, mjs) {
-    response.writeHead(200, {
-        'Content-Type': 'text/plain'
-    });
-    let pf = exec(`${process.argv0} ${mjs}`, {
+let HttpModjs = function (response, mjs, args) {
+    let rs = '';
+    let pf = exec(`${process.argv0} ${mjs} ${args}`, {
         windowsHide: true,
         timeout: 60000
     });
     pf.stdout.on('data', function (data) {
-        response.write(data);
+        rs += data;
     });
     pf.stderr.on('data', function (data) {
-        response.write('Error:' + data);
+        rs += data;
     });
     pf.on('exit', function (code) {
+        response.writeHead(code == 0 ? 200 : 503, {
+            'Content-Length': rs.length,
+            'Content-Type': 'text/plain'
+        });
+        response.write(rs);
         response.end();
     });
 };
 
-let httpTryFile = function (temp) {
-    let filePath = url.parse(temp).pathname;
-    let realPath = path.join(WEBOX_ROOT, filePath);
-    let pathStat = fs.existsSync(realPath) && fs.lstatSync(realPath);
+let httpTryFile = function (uri) {
+    let uripath = url.parse(uri).pathname;
+    let fullpath = path.join(WEBOX_ROOT, uripath);
+    let pathstat = fs.existsSync(fullpath) && fs.lstatSync(fullpath);
     //文件存在直接返回
-    if (pathStat && pathStat.isFile()) {
-        return [filePath, realPath];
+    if (pathstat && pathstat.isFile()) {
+        return [uripath, fullpath];
     }
     //尝试返回默认首页
-    if (pathStat && pathStat.isDirectory()) {
+    if (pathstat && pathstat.isDirectory()) {
         for (let index of WEBOX_INDEX) {
-            let real = path.join(realPath, index);
+            let real = path.join(fullpath, index);
             if (fs.existsSync(real)) {
-                return [filePath + '/' + index, real];
+                return [uripath + '/' + index, real];
             }
         }
     }
     //文件不存在
-    return [filePath, ''];
+    return [uripath, ''];
 };
 
 let httpServer = http.createServer(function (request, response) {
-    let [filePath, realPath] = httpTryFile(request.url);
+    let [uripath, fullpath] = httpTryFile(request.url);
     echo('Request URL:', request.url);
     //找不到文件
-    if (realPath === '') {
-        httpMessage(response, 404, filePath);
+    if (fullpath === '') {
+        httpMessage(response, 404, uripath);
         return 404;
     }
     //运行js模块
-    if (filePath.match(/\.mjs$/)) {
-        return HttpModjs(response, realPath);
+    if (uripath.match(/\.mjs$/)) {
+        let query = url.parse(request.url).query;
+        return HttpModjs(response, fullpath, query);
     }
     //尝试读取文件
-    fs.createReadStream(realPath)
+    fs.createReadStream(fullpath)
         .on('error', function (err) {
-            httpMessage(response, 500, filePath);
+            httpMessage(response, 503, uripath);
         })
         .on('data', function (chunk) {
             response.writeHead(200, {
-                'Content-Type': mime(realPath)
+                'Content-Type': mime(fullpath)
             });
             response.write(chunk);
         })
