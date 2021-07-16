@@ -26,4 +26,4 @@ Other users can use your internal ip to access your published site.
 
 ## dynamic js module
 
-Dynamically parse `*.mjs` and output the result to browser.
+Dynamically parse `*.dy.js` and output the result to browser.

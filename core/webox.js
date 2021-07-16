@@ -1,12 +1,13 @@
 let fs = require('fs');
 let path = require('path');
-let exec = require('child_process').exec;
 
 let url = require('url');
 let http = require('http');
 
 let echo = require('./echo');
 let mime = require('./mime');
+
+let dyjs = require('../plugin/dynamic');
 
 /////////////////////////////////////////////////////////////
 // build config
@@ -36,28 +37,6 @@ let httpMessage = function (response, code, text) {
     });
     response.write(text);
     response.end();
-};
-
-let HttpModjs = function (response, mjs, args) {
-    let rs = '';
-    let pf = exec(`${process.argv0} ${mjs} ${args}`, {
-        windowsHide: true,
-        timeout: 60000
-    });
-    pf.stdout.on('data', function (data) {
-        rs += data;
-    });
-    pf.stderr.on('data', function (data) {
-        rs += data;
-    });
-    pf.on('exit', function (code) {
-        response.writeHead(code == 0 ? 200 : 503, {
-            'Content-Length': rs.length,
-            'Content-Type': 'text/plain'
-        });
-        response.write(rs);
-        response.end();
-    });
 };
 
 let httpTryFile = function (uri) {
@@ -90,9 +69,9 @@ let httpServer = http.createServer(function (request, response) {
         return 404;
     }
     //运行js模块
-    if (uripath.match(/\.mjs$/)) {
+    if (dyjs.matcher(request.url)) {
         let query = url.parse(request.url).query;
-        return HttpModjs(response, fullpath, query);
+        return dyjs.handler(response, fullpath, query);
     }
     //尝试读取文件
     fs.createReadStream(fullpath)

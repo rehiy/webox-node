@@ -17,7 +17,7 @@ process.once('exit', function (code) {
 });
 
 /////////////////////////////////////////////////////////////
-// code from www.anrip.com
+// code from www.rehiy.com
 
 var config = process.argv.slice(2);
 var listen = config[0] ? config[0].split(':') : [];
@@ -27,4 +27,4 @@ process.env.WEBOX_PORT = listen[1] > 0 ? listen[1] : 80;
 
 process.env.WEBOX_ROOT = config[1] || 'webroot';
 
-require('./libs/webox');
+require('./core/webox');
