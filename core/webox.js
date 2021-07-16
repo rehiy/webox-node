@@ -68,7 +68,7 @@ let httpServer = http.createServer(function (request, response) {
         httpMessage(response, 404, uripath);
         return 404;
     }
-    //运行js模块
+    //运行dyjs模块
     if (dyjs.matcher(request.url)) {
         let query = url.parse(request.url).query;
         return dyjs.handler(response, fullpath, query);
