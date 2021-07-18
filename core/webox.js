@@ -65,8 +65,7 @@ let httpServer = http.createServer(function (request, response) {
     echo('Request URL:', request.url);
     //找不到文件
     if (fullpath === '') {
-        httpMessage(response, 404, uripath);
-        return 404;
+        return httpMessage(response, 404, uripath);
     }
     //运行dyjs模块
     if (dyjs.matcher(request.url)) {
