@@ -2,7 +2,7 @@
     "name": "webox-node",
     "description": "a mini web server",
     "homepage": "https://github.com/rehiy/webox-node",
-    "version": "2.0.3",
+    "version": "2.1.0",
     "license": "MIT License",
     "author": {
         "name": "Rehiy Wang",
@@ -20,6 +20,9 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/rehiy/webox-node.git"
+    },
+    "scripts": {
+        "start": "node index.js"
     },
     "dependencies": {},
     "main": "index.js",

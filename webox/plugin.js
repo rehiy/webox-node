@@ -2,10 +2,7 @@ let cgi = require('../plugin/cgi');
 
 let tryfile = require('../plugin/tryfile');
 
-/////////////////////////////////////////////////////////////
-// parse config
-
-let WEBOX_PLUG = process.env.WEBOX_PLUG || [];
+let { WEBOX_PLUG } = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
 // create handler

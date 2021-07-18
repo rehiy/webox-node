@@ -1,11 +1,7 @@
-let WEBOX_ERROR = process.env.WEBOX_ERROR || {
-    200: '%s',
-    404: 'File Not Found: %s',
-    503: 'Server Internal Error: %s'
-};
+let { WEBOX_ERROR } = require('./config');
 
 function logger() {
-    let arg1 = ['[' + dateFormat('hh:mm:ss') + ']', 'Webox -'];
+    let arg1 = ['[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']', 'Webox -'];
     let arg2 = Array.prototype.slice.call(arguments);
     console.log.apply(null, arg1.concat(arg2));
 }

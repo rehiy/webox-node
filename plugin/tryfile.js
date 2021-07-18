@@ -2,14 +2,7 @@ let fs = require('fs');
 let url = require('url');
 let path = require('path');
 
-/////////////////////////////////////////////////////////////
-// parse config
-
-let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT);
-
-let WEBOX_INDEX = process.env.WEBOX_INDEX || [
-    'index.html', 'index.htm', 'index.cgi'
-];
+let { WEBOX_ROOT, WEBOX_INDEX } = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
 // create handler

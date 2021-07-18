@@ -1,20 +1,13 @@
 let fs = require('fs');
-let path = require('path');
 let http = require('http');
 
-let getMimeType = require('./mime');
+let getMimeType = require('../helper/mime');
+
+let { logger, httpMessage } = require('../helper/utils');
+
+let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
 
 let pluginCaller = require('./plugin');
-
-let { logger, httpMessage } = require('./utils');
-
-/////////////////////////////////////////////////////////////
-// parse config
-
-let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT);
-
-let WEBOX_HOST = process.env.WEBOX_HOST;
-let WEBOX_PORT = process.env.WEBOX_PORT;
 
 /////////////////////////////////////////////////////////////
 // create server

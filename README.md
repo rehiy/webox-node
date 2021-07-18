@@ -28,30 +28,39 @@ Other users can use your internal ip to access your published site.
 
 Dynamically parse `*.cgi` or '`*.cgi.js`, and then output the result to browser.
 
-## config env list
+## exit with 0 or 1
 
-- `WEBOX_HOST`, default value is `127.0.0.1`
+Set `process.env.WEBOX_FAILED` to `1`, and exit with error code 1.
 
-- `WEBOX_PORT`, default value is `80`
+## config with file
 
-- `WEBOX_ROOT`, default value is `webroot`
-
-- `WEBOX_PLUG`, default value is `[]`
-
-- `WEBOX_INDEX`, default value is
+Please set `process.env.WEBOX_CONF_FILE` to config file path.
 
 ```
-['index.html', 'index.htm', 'index.cgi']
-```
+module.exports = {
 
-- `WEBOX_ERROR`, default value is
+    WEBOX_HOST: '127.0.0.1',
+
+    WEBOX_PORT: 80,
+
+    WEBOX_ROOT: 'webroot',
+
+    WEBOX_PLUG: [],
+
+    WEBOX_INDEX: [
+        'index.html',
+        'index.htm',
+        'index.cgi'
+    ],
+
+    WEBOX_ERROR: {
+        200: '%s',
+        404: 'File Not Found: %s',
+        503: 'Server Internal Error: %s'
+    },
+
+    WEBOX_FAILED: null
+
+};
 
 ```
-{
-    200: '%s',
-    404: 'File Not Found: %s',
-    503: 'Server Internal Error: %s'
-}
-```
-
-- `WEBOX_FAILED`, default value is `undefined`
