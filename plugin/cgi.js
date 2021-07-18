@@ -1,8 +1,8 @@
 let url = require('url');
 let exec = require('child_process').exec;
 
-let check = function (reqfile, realpath) {
-    return realpath && reqfile.match(/\.cgi.js$/);
+let check = function (r, p) {
+    return p && r.match(/\.cgi(\.js)?$/);
 };
 
 /////////////////////////////////////////////////////////////
