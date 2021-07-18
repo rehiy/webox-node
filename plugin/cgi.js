@@ -2,7 +2,7 @@ let url = require('url');
 let exec = require('child_process').exec;
 
 let check = function (reqfile, realpath) {
-    return realpath && reqfile.match(/\.dy.js$/);
+    return realpath && reqfile.match(/\.cgi.js$/);
 };
 
 /////////////////////////////////////////////////////////////
