@@ -2,7 +2,7 @@
     "name": "webox-node",
     "description": "a mini web server",
     "homepage": "https://github.com/rehiy/webox-node",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "license": "MIT License",
     "author": {
         "name": "Rehiy Wang",
