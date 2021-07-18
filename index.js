@@ -22,9 +22,16 @@ process.once('exit', function (code) {
 var config = process.argv.slice(2);
 var listen = config[0] ? config[0].split(':') : [];
 
-process.env.WEBOX_HOST = listen[0] || '127.0.0.1';
-process.env.WEBOX_PORT = listen[1] > 0 ? listen[1] : 80;
+if (typeof process.env.WEBOX_HOST === 'undefined') {
+    process.env.WEBOX_HOST = listen[0] || '127.0.0.1';
+}
 
-process.env.WEBOX_ROOT = config[1] || 'webroot';
+if (typeof process.env.WEBOX_PORT === 'undefined') {
+    process.env.WEBOX_PORT = listen[1] > 0 ? listen[1] : 80;
+}
+
+if (typeof process.env.WEBOX_ROOT === 'undefined') {
+    process.env.WEBOX_ROOT = config[1] || 'webroot';
+}
 
 require('./webox/core');
