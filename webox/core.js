@@ -4,7 +4,7 @@ let path = require('path');
 let url = require('url');
 let http = require('http');
 
-let echo = require('./echo');
+let logd = require('./logd');
 let mime = require('./mime');
 
 let dyjs = require('../plugin/dynamic');
@@ -62,7 +62,7 @@ let httpTryFile = function (uri) {
 
 let httpServer = http.createServer(function (request, response) {
     let [uripath, fullpath] = httpTryFile(request.url);
-    echo('Request URL:', request.url);
+    logd('Request URL:', request.url);
     //找不到文件
     if (fullpath === '') {
         return httpMessage(response, 404, uripath);
@@ -90,8 +90,8 @@ let httpServer = http.createServer(function (request, response) {
 
 httpServer.on('error', function (err) {
     if (err.code == 'EADDRINUSE') {
-        echo('IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
-        echo('Failover:', WEBOX_HOST, ++WEBOX_PORT, '\n');
+        logd('IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
+        logd('Failover:', WEBOX_HOST, ++WEBOX_PORT, '\n');
         httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
     }
 });
@@ -99,8 +99,8 @@ httpServer.on('error', function (err) {
 httpServer.on('listening', function () {
     let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
     let port = WEBOX_PORT === '80' ? '' : ':' + WEBOX_PORT;
-    echo('Server started:', 'http://' + host + port);
-    echo('Root Directory:', WEBOX_ROOT, '\n');
+    logd('Server started:', 'http://' + host + port);
+    logd('Root Directory:', WEBOX_ROOT, '\n');
 });
 
 /////////////////////////////////////////////////////////////

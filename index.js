@@ -27,4 +27,4 @@ process.env.WEBOX_PORT = listen[1] > 0 ? listen[1] : 80;
 
 process.env.WEBOX_ROOT = config[1] || 'webroot';
 
-require('./core/webox');
+require('./webox/core');
