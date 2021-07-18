@@ -1,4 +1,5 @@
-let dynamic = require('../plugin/dynamic');
+let cgi = require('../plugin/cgi');
+
 let tryfile = require('../plugin/tryfile');
 
 /////////////////////////////////////////////////////////////
@@ -7,7 +8,7 @@ let tryfile = require('../plugin/tryfile');
 let WEBOX_PLUG = process.env.WEBOX_PLUG || [];
 
 WEBOX_PLUG.unshift(tryfile);
-WEBOX_PLUG.push(dynamic);
+WEBOX_PLUG.push(cgi);
 
 /////////////////////////////////////////////////////////////
 // create handler
