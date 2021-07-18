@@ -11,10 +11,10 @@ let { logger, httpMessage } = require('./utils');
 /////////////////////////////////////////////////////////////
 // parse config
 
-let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT || 'webroot');
+let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT);
 
-let WEBOX_HOST = process.env.WEBOX_HOST || '127.0.0.1';
-let WEBOX_PORT = process.env.WEBOX_PORT || 80;
+let WEBOX_HOST = process.env.WEBOX_HOST;
+let WEBOX_PORT = process.env.WEBOX_PORT;
 
 /////////////////////////////////////////////////////////////
 // create server

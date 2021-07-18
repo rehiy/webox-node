@@ -5,17 +5,17 @@ let path = require('path');
 /////////////////////////////////////////////////////////////
 // parse config
 
-let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT || 'webroot');
+let WEBOX_ROOT = path.resolve(process.env.WEBOX_ROOT);
 
 let WEBOX_INDEX = process.env.WEBOX_INDEX || [
-    'index.html', 'index.htm'
+    'index.html', 'index.htm', 'index.cgi'
 ];
 
 /////////////////////////////////////////////////////////////
 // create handler
 
 module.exports = function (pdata, request) {
-    
+
     let reqfile = url.parse(request.url).pathname;
     let realpath = path.join(WEBOX_ROOT, reqfile);
 
