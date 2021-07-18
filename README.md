@@ -61,9 +61,7 @@ module.exports = {
         200: '%s',
         404: 'File Not Found: %s',
         503: 'Server Internal Error: %s'
-    },
-
-    WEBOX_FAILED: null
+    }
 
 };
 
