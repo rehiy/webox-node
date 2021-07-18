@@ -1,4 +1,3 @@
-let fs = require('fs');
 let url = require('url');
 let exec = require('child_process').exec;
 
@@ -17,7 +16,7 @@ module.exports = function (pdata, request, response) {
         return;
     }
 
-    let output = '';
+    let conts = '';
 
     let query = url.parse(request.url).query;
 
@@ -27,17 +26,17 @@ module.exports = function (pdata, request, response) {
     });
 
     child.stdout.on('data', function (data) {
-        output += data;
+        conts += data;
     });
     child.stderr.on('data', function (data) {
-        output += data;
+        conts += data;
     });
     child.on('exit', function (code) {
         response.writeHead(code == 0 ? 200 : 503, {
-            'Content-Length': output.length,
+            'Content-Length': conts.length,
             'Content-Type': 'text/plain'
         });
-        response.write(output);
+        response.write(conts);
         response.end();
     });
 
