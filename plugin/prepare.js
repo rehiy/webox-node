@@ -9,14 +9,16 @@ let { WEBOX_ROOT, WEBOX_INDEX } = require('../helper/config');
 
 module.exports = function (pdata, request) {
 
-    let reqfile = url.parse(request.url).pathname;
-    let realpath = path.join(WEBOX_ROOT, reqfile);
+    let query = url.parse(request.url).query;
+    let pathname = url.parse(request.url).pathname;
+    let realpath = path.join(WEBOX_ROOT, pathname);
 
     let pathstat = fs.existsSync(realpath) && fs.lstatSync(realpath);
 
     //文件存在直接返回
     if (pathstat && pathstat.isFile()) {
-        pdata.reqfile = reqfile;
+        pdata.query = query;
+        pdata.pathname = pathname;
         pdata.realpath = realpath;
         return;
     }
@@ -26,7 +28,8 @@ module.exports = function (pdata, request) {
         for (let index of WEBOX_INDEX) {
             let real = path.join(realpath, index);
             if (fs.existsSync(real)) {
-                pdata.reqfile = reqfile + '/' + index;
+                pdata.query = query;
+                pdata.pathname = path.join(pathname, index);
                 pdata.realpath = real;
                 return;
             }
@@ -34,7 +37,8 @@ module.exports = function (pdata, request) {
     }
 
     //文件不存在
-    pdata.reqfile = reqfile;
+    pdata.query = query;
+    pdata.pathname = pathname;
     pdata.realpath = '';
 
 };

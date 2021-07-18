@@ -6,10 +6,13 @@ function logger() {
     console.log.apply(null, arg1.concat(arg2));
 }
 
-function httpMessage(response, code, text) {
-    text = WEBOX_ERROR[code].replace('%s', text);
-    response.writeHead(code, {
-        'Content-Type': 'text/plain'
+function httpMessage(response, code, text, type) {
+    if (WEBOX_ERROR[code]) {
+        text = WEBOX_ERROR[code].replace('%s', text);
+    }
+    response.writeHead(code || 200, {
+        'Content-Length': text.length,
+        'Content-Type': type || 'text/plain'
     });
     response.write(text);
     response.end();

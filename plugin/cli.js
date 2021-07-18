@@ -1,8 +1,9 @@
-let url = require('url');
 let exec = require('child_process').exec;
 
+let { httpMessage } = require('../helper/utils');
+
 let check = function (r, p) {
-    return p && r.match(/\.cgi(\.js)?$/);
+    return p && r.match(/\.cli(\.js)?$/);
 };
 
 /////////////////////////////////////////////////////////////
@@ -10,15 +11,13 @@ let check = function (r, p) {
 
 module.exports = function (pdata, request, response) {
 
-    const { reqfile, realpath } = pdata;
+    const { query, pathname, realpath } = pdata;
 
-    if (!check(reqfile, realpath)) {
+    if (!check(pathname, realpath)) {
         return;
     }
 
-    let conts = '';
-
-    let query = url.parse(request.url).query;
+    let text = '';
 
     let child = exec(`${process.argv0} ${realpath} ${query}`, {
         windowsHide: true,
@@ -26,18 +25,15 @@ module.exports = function (pdata, request, response) {
     });
 
     child.stdout.on('data', function (data) {
-        conts += data;
+        text += data;
     });
     child.stderr.on('data', function (data) {
-        conts += data;
+        text += data;
     });
+
     child.on('exit', function (code) {
-        response.writeHead(code == 0 ? 200 : 503, {
-            'Content-Length': conts.length,
-            'Content-Type': 'text/plain'
-        });
-        response.write(conts);
-        response.end();
+        code == 0 ? 200 : 503;
+        httpMessage(response, code, text)
     });
 
     return true;

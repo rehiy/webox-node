@@ -16,20 +16,20 @@ let httpServer = http.createServer(function (request, response) {
     logger('Request URL:', request.url);
     //调用插件
     let pdata = {
-        reqfile: '', realpath: ''
+        pathname: '', realpath: ''
     };
     if (pluginCaller(pdata, request, response)) {
         return true;
     }
     //找不到文件
     if (pdata.realpath === '') {
-        httpMessage(response, 404, pdata.reqfile);
+        httpMessage(response, 404, pdata.pathname);
         return true;
     }
     //尝试读取文件
     fs.createReadStream(pdata.realpath)
         .on('error', function (err) {
-            httpMessage(response, 503, pdata.reqfile);
+            httpMessage(response, 503, pdata.pathname);
         })
         .on('data', function (chunk) {
             response.writeHead(200, {

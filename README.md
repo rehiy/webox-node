@@ -24,9 +24,13 @@ The web server will listen on `0.0.0.0:80` and use `./public` as the root direct
 
 Other users can use your internal ip to access your published site.
 
-## run js cgi module
+## run js as cli script
 
-Dynamically parse `*.cgi` or '`*.cgi.js`, and then output the result to browser.
+Dynamically parse `*.cli` or '`*.cli.js`, and then output the result to browser.
+
+## run js as commonjs module
+
+Dynamically parse `*.mod` or '`*.mod.js`, and then output the result to browser.
 
 ## exit with 0 or 1
 
@@ -50,7 +54,7 @@ module.exports = {
     WEBOX_INDEX: [
         'index.html',
         'index.htm',
-        'index.cgi'
+        'index.cli'
     ],
 
     WEBOX_ERROR: {

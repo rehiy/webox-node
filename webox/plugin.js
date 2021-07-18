@@ -1,6 +1,7 @@
-let cgi = require('../plugin/cgi');
+let clijs = require('../plugin/cli');
+let modjs = require('../plugin/mod');
 
-let tryfile = require('../plugin/tryfile');
+let prepare = require('../plugin/prepare');
 
 let { WEBOX_PLUG } = require('../helper/config');
 
@@ -9,7 +10,7 @@ let { WEBOX_PLUG } = require('../helper/config');
 
 module.exports = function (pdata, request, response) {
 
-    tryfile(pdata, request, response);
+    prepare(pdata, request, response);
 
     for (let plug of WEBOX_PLUG) {
         if (plug(pdata, request, response)) {
@@ -17,7 +18,11 @@ module.exports = function (pdata, request, response) {
         }
     }
 
-    if (cgi(pdata, request, response)) {
+    if (clijs(pdata, request, response)) {
+        return true;
+    }
+
+    if (modjs(pdata, request, response)) {
         return true;
     }
 
