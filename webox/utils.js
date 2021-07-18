@@ -1,8 +1,23 @@
-module.exports = function () {
+let WEBOX_ERROR = process.env.WEBOX_ERROR || {
+    200: '%s',
+    404: 'File Not Found: %s',
+    503: 'Server Internal Error: %s'
+};
+
+function logger() {
     let arg1 = ['[' + dateFormat('hh:mm:ss') + ']', 'Webox -'];
     let arg2 = Array.prototype.slice.call(arguments);
     console.log.apply(null, arg1.concat(arg2));
-};
+}
+
+function httpMessage(response, code, text) {
+    text = WEBOX_ERROR[code].replace('%s', text);
+    response.writeHead(code, {
+        'Content-Type': 'text/plain'
+    });
+    response.write(text);
+    response.end();
+}
 
 function dateFormat(fmt) {
     let d = new Date();
@@ -25,3 +40,8 @@ function dateFormat(fmt) {
     }
     return fmt;
 }
+
+module.exports = {
+    logger: logger,
+    httpMessage: httpMessage
+};
