@@ -8,7 +8,7 @@ function check(r, p) {
 
 module.exports = function (pdata, request, response) {
 
-    const { url, realpath } = pdata;
+    let { url, realpath } = pdata;
 
     if (!check(url.pathname, realpath)) {
         return;

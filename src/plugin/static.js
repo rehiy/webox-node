@@ -8,7 +8,7 @@ let { httpMessage } = require('../helper/utils');
 
 module.exports = function (pdata, request, response) {
 
-    const { url, realpath } = pdata;
+    let { url, realpath } = pdata;
 
     //找不到文件
     if (realpath === '') {
