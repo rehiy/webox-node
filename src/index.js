@@ -1,4 +1,8 @@
-#!/usr/bin/env node
+/**
+ * Webox - HTTP Server
+ * @author rehiy <wang@rehiy.com>
+ * @Website http://www.rehiy.com
+ */
 
 'use strict';
 

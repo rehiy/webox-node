@@ -2,12 +2,11 @@ let exec = require('child_process').exec;
 
 let { httpMessage } = require('../helper/utils');
 
-let check = function (r, p) {
-    return p && r.match(/\.cli(\.js)?$/);
-};
-
 /////////////////////////////////////////////////////////////
-// create handler
+
+function check(r, p) {
+    return p && r.match(/\.cli(\.js)?$/);
+}
 
 module.exports = function (pdata, request, response) {
 

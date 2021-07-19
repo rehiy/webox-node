@@ -5,7 +5,6 @@ let path = require('path');
 let { WEBOX_ROOT, WEBOX_INDEX } = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
-// create handler
 
 function fixpath(file, extra) {
     if (extra.indexOf('.') === 0) {

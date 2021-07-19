@@ -1,11 +1,10 @@
 let { httpMessage } = require('../helper/utils');
 
-let check = function (r, p) {
-    return p && r.match(/\.mod(\.js)?$/);
-};
-
 /////////////////////////////////////////////////////////////
-// create handler
+
+function check(r, p) {
+    return p && r.match(/\.mod(\.js)?$/);
+}
 
 module.exports = function (pdata, request, response) {
 

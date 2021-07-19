@@ -6,7 +6,6 @@ let prepare = require('../plugin/prepare');
 let { WEBOX_PLUG } = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
-// create handler
 
 module.exports = function (pdata, request, response) {
 
