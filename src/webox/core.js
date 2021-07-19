@@ -1,8 +1,8 @@
 let http = require('http');
 
-let { logger } = require('../helper/utils');
-
 let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
+
+let { logger } = require('../helper/utils');
 
 let pluginCaller = require('./plugin');
 

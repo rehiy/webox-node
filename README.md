@@ -1,4 +1,6 @@
-# a mini web server
+# Webox-node is a small HTTP server
+
+Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.
 
 ## install
 
@@ -14,7 +16,7 @@ npx webox
 
 The web server will listen on `127.0.0.1:80` and use `./webroot` as the root directory.
 
-## publish your site
+## publish your website
 
 ```js
 npx webox 0.0.0.0:80 public
@@ -24,11 +26,11 @@ The web server will listen on `0.0.0.0:80` and use `./public` as the root direct
 
 Other users can use your internal ip to access your published site.
 
-## run js as cli script
+## execute js as cli script
 
 Dynamically parse `*.cli` or '`*.cli.js`, and then output the result to browser.
 
-## run js as commonjs module
+## load js as commonjs module
 
 Dynamically parse `*.mod` or '`*.mod.js`, and then output the result to browser.
 
@@ -53,14 +55,16 @@ module.exports = {
 
     WEBOX_INDEX: [
         'index.html',
-        'index.htm',
-        'index.cli'
+        'index.htm'
     ],
 
     WEBOX_ERROR: {
         200: '%s',
-        404: 'File Not Found: %s',
-        503: 'Server Internal Error: %s'
+        400: 'Bad Request: %s',
+        403: 'Forbidden : %s',
+        404: 'NO Found: %s',
+        500: 'Internal Server Error: %s',
+        503: 'Service Unavilable: %s'
     }
 
 };

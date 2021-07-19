@@ -1,10 +1,10 @@
+let { WEBOX_PLUG } = require('../helper/config');
+
 let P_cli = require('../plugin/cli');
 let P_mod = require('../plugin/mod');
 
 let P_prepare = require('../plugin/prepare');
 let P_static = require('../plugin/static');
-
-let { WEBOX_PLUG } = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
 

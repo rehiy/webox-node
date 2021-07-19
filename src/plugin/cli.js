@@ -1,4 +1,4 @@
-let exec = require('child_process').exec;
+let { exec } = require('child_process');
 
 let { httpMessage } = require('../helper/utils');
 
