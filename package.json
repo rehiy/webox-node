@@ -24,7 +24,7 @@
     },
     "scripts": {
         "start": "nodemon src/index.js",
-        "build": "rollup -c scripts/build.js",
+        "build": "rollup -c scripts/rollup.js",
         "postbuild": "node scripts/version.js",
         "lint": "eslint"
     },
