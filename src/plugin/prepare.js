@@ -16,10 +16,10 @@ module.exports = function (pdata, request, response) {
 
     let filepath = path.join(WEBOX_ROOT, pdata.url.pathname);
 
-    let pathstat = fs.existsSync(filepath) && fs.lstatSync(filepath);
+    let filestat = fs.existsSync(filepath) && fs.lstatSync(filepath);
 
     //文件存在直接返回
-    if (pathstat && pathstat.isFile()) {
+    if (filestat && filestat.isFile()) {
         pdata.filepath = filepath;
         return;
     }
