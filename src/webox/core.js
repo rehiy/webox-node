@@ -15,7 +15,7 @@ let httpServer = http.createServer(function (request, response) {
 
     let pdata = {
         url: new URL(request.url, `http://${request.headers.host}`),
-        realpath: ''
+        filepath: ''
     };
 
     pluginCaller(pdata, request, response);

@@ -2,19 +2,19 @@ let { httpMessage } = require('../helper/utils');
 
 /////////////////////////////////////////////////////////////
 
-function check(r, p) {
-    return p && r.match(/\.mod(\.js)?$/);
+function check(p) {
+    return p && p.match(/\.mod(\.js)?$/);
 }
 
 module.exports = function (pdata, request, response) {
 
-    let { url, realpath } = pdata;
+    let { filepath } = pdata;
 
-    if (!check(url.pathname, realpath)) {
+    if (!check(filepath)) {
         return;
     }
 
-    let child = require(realpath);
+    let child = require(filepath);
 
     child(pdata, function (code, text) {
         httpMessage(response, code, text)

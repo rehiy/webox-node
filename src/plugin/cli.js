@@ -4,15 +4,15 @@ let { httpMessage } = require('../helper/utils');
 
 /////////////////////////////////////////////////////////////
 
-function check(r, p) {
-    return p && r.match(/\.cli(\.js)?$/);
+function check(p) {
+    return p && p.match(/\.cli(\.js)?$/);
 }
 
 module.exports = function (pdata, request, response) {
 
-    let { url, realpath } = pdata;
+    let { url, filepath } = pdata;
 
-    if (!check(url.pathname, realpath)) {
+    if (!check(filepath)) {
         return;
     }
 
@@ -20,7 +20,7 @@ module.exports = function (pdata, request, response) {
 
     let args = url.search.replace(/^\?/, '').replace(/&/g, ' ');
 
-    let child = exec(`${process.argv0} ${realpath} ${args}`, {
+    let child = exec(`${process.argv0} ${filepath} ${args}`, {
         windowsHide: true,
         timeout: 60000
     });
