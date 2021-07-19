@@ -29,8 +29,11 @@ module.exports = Object.assign({
 
     WEBOX_ERROR: {
         200: '%s',
-        404: 'File Not Found: %s',
-        503: 'Server Internal Error: %s'
+        400: 'Bad Request: %s',
+        403: 'Forbidden : %s',
+        404: 'NO Found: %s',
+        500: 'Internal Server Error: %s',
+        503: 'Service Unavilable: %s'
     }
 
 }, PR);
