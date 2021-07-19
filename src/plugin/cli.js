@@ -10,15 +10,17 @@ function check(r, p) {
 
 module.exports = function (pdata, request, response) {
 
-    const { query, pathname, realpath } = pdata;
+    const { url, realpath } = pdata;
 
-    if (!check(pathname, realpath)) {
+    if (!check(url.pathname, realpath)) {
         return;
     }
 
     let text = '';
 
-    let child = exec(`${process.argv0} ${realpath} ${query}`, {
+    let args = url.search.replace(/^\?/, '').replace(/&/g, ' ');
+
+    let child = exec(`${process.argv0} ${realpath} ${args}`, {
         windowsHide: true,
         timeout: 60000
     });

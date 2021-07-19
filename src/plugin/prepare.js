@@ -1,5 +1,4 @@
 let fs = require('fs');
-let url = require('url');
 let path = require('path');
 
 let { WEBOX_ROOT, WEBOX_INDEX } = require('../helper/config');
@@ -13,19 +12,14 @@ function fixpath(file, extra) {
     return path.join(file, extra);
 }
 
-module.exports = function (pdata, request) {
+module.exports = function (pdata, request, response) {
 
-    let query = url.parse(request.url).query;
-    let pathname = url.parse(request.url).pathname;
-
-    let realpath = path.join(WEBOX_ROOT, pathname);
+    let realpath = path.join(WEBOX_ROOT, pdata.url.pathname);
 
     let pathstat = fs.existsSync(realpath) && fs.lstatSync(realpath);
 
     //文件存在直接返回
     if (pathstat && pathstat.isFile()) {
-        pdata.query = query;
-        pdata.pathname = pathname;
         pdata.realpath = realpath;
         return;
     }
@@ -34,16 +28,12 @@ module.exports = function (pdata, request) {
     for (let index of WEBOX_INDEX) {
         let file = fixpath(realpath, index);
         if (fs.existsSync(file)) {
-            pdata.query = query;
-            pdata.pathname = fixpath(pathname, index);
             pdata.realpath = file;
             return;
         }
     }
 
     //文件不存在
-    pdata.query = query;
-    pdata.pathname = pathname;
     pdata.realpath = '';
 
 };
