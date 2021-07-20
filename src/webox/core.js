@@ -36,8 +36,8 @@ httpServer.on('error', err => {
 
 httpServer.on('listening', () => {
 
-    let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
-    let port = WEBOX_PORT === '80' ? '' : ':' + WEBOX_PORT;
+    let host = WEBOX_HOST == '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
+    let port = WEBOX_PORT == '80' ? '' : ':' + WEBOX_PORT;
 
     logger('Server started:', 'http://' + host + port);
     logger('Root Directory:', WEBOX_ROOT, '\n');

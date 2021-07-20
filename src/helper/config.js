@@ -37,7 +37,9 @@ module.exports = Object.assign({
         404: 'NO Found: %s',
         500: 'Internal Server Error: %s',
         503: 'Service Unavilable: %s'
-    }
+    },
+
+    WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
 
 }, RC);
 

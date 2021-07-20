@@ -1,16 +1,26 @@
 let https = require('https');
 
-let { WEBOX_MODE } = require('../helper/config');
+let { WEBOX_MODE, WEBOX_CHECK_API } = require('../helper/config');
 
-let { logger } = require('./utils');
+let { logger, parseJSON } = require('./utils');
 
-let url = 'https://api.vmlu.com/webox/?platform=node';
+let req = https.get(WEBOX_CHECK_API + '&version=dev', res => {
 
-let req = https.get(url + '&version=dev', res => {
+    if (res.statusCode != 200) {
+        return;
+    }
+
+    let raw = '';
 
     res.on('data', d => {
-        data = JSON.parse(d);
-        data.message && logger(data.message);
+        raw += d.toString();
+    });
+
+    res.on('end', () => {
+        let data = parseJSON(raw);
+        if (data && data.message) {
+            logger(data.message);
+        }
     });
 
 });

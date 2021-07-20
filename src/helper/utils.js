@@ -4,6 +4,17 @@ function logger(...msg) {
     console.log('[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']', 'Webox -', ...msg);
 }
 
+function parseJSON(str) {
+    if (typeof str == 'string') {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+    }
+    return false;
+}
+
 function dateFormat(fmt, date) {
     let d = date || new Date();
     let o = {
@@ -44,6 +55,7 @@ if (console.light === undefined) {
 
 module.exports = {
     logger: logger,
+    parseJSON: parseJSON,
     dateFormat: dateFormat,
     httpMessage: httpMessage
 };
