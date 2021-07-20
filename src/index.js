@@ -13,7 +13,7 @@ process.title = 'Webox - HTTP Server';
 process.env.INIT_CWD = process.cwd();
 
 // normal exit with 0 or 1
-process.once('exit', function (code) {
+process.once('exit', code => {
     logger('Service Stopped');
     if (code === 0 && process.env.WEBOX_EXIT_CODE) {
         process.exit(1);

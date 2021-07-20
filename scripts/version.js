@@ -13,7 +13,7 @@ let package = require('../package.json');
     package.main = package.main.replace('src/', '');
     package.bin.webox = package.bin.webox.replace('src/', '');
 
-    package.version = package.version.replace(/(\d+)$/, function ($0, $1) {
+    package.version = package.version.replace(/(\d+)$/, ($0, $1) => {
         return ++$1;
     });
 

@@ -16,7 +16,7 @@ module.exports = function (pdata, request, response) {
 
     let child = require(filepath);
 
-    child(pdata, function (code, text) {
+    child(pdata, (code, text) => {
         httpMessage(response, code, text)
     });
 

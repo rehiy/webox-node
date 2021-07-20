@@ -9,7 +9,7 @@ let pluginCaller = require('./plugin');
 /////////////////////////////////////////////////////////////
 // create server
 
-let httpServer = http.createServer(function (request, response) {
+let httpServer = http.createServer((request, response) => {
 
     if (WEBOX_MODE == 'debug') {
         logger('Request URL:', request.url);
@@ -24,7 +24,7 @@ let httpServer = http.createServer(function (request, response) {
 
 });
 
-httpServer.on('error', function (err) {
+httpServer.on('error', err => {
 
     if (err.code == 'EADDRINUSE') {
         logger('IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
@@ -34,7 +34,7 @@ httpServer.on('error', function (err) {
 
 });
 
-httpServer.on('listening', function () {
+httpServer.on('listening', () => {
 
     let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
     let port = WEBOX_PORT === '80' ? '' : ':' + WEBOX_PORT;

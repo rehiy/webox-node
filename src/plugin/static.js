@@ -18,16 +18,16 @@ module.exports = function (pdata, request, response) {
 
     //流式发送文件
     fs.createReadStream(filepath)
-        .on('error', function (err) {
+        .on('error', err => {
             httpMessage(response, 503, url.pathname);
         })
-        .on('data', function (chunk) {
+        .on('data', chunk => {
             response.writeHead(200, {
                 'Content-Type': getMimeType(filepath)
             });
             response.write(chunk);
         })
-        .on('end', function () {
+        .on('end', () => {
             response.end();
         });
 

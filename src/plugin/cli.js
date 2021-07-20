@@ -25,14 +25,14 @@ module.exports = function (pdata, request, response) {
         timeout: 60000
     });
 
-    child.stdout.on('data', function (data) {
+    child.stdout.on('data', data => {
         text += data;
     });
-    child.stderr.on('data', function (data) {
+    child.stderr.on('data', data => {
         text += data;
     });
 
-    child.on('exit', function (code) {
+    child.on('exit', code => {
         code == 0 ? 200 : 503;
         httpMessage(response, code, text)
     });
