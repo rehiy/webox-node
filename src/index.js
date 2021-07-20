@@ -40,4 +40,5 @@ if (params[1]) {
     config.WEBOX_ROOT = params[1];
 }
 
+require('./helper/check');
 require('./webox/core');
