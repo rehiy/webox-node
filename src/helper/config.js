@@ -15,6 +15,8 @@ if (cf && fs.existsSync(cf)) {
 
 module.exports = Object.assign({
 
+    WEBOX_MODE: 'debug', // prod or debug
+
     WEBOX_HOST: '127.0.0.1',
 
     WEBOX_PORT: 80,

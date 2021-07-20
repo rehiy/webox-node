@@ -1,6 +1,6 @@
 let http = require('http');
 
-let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
+let { WEBOX_MODE, WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
 
 let { logger } = require('../helper/utils');
 
@@ -11,7 +11,9 @@ let pluginCaller = require('./plugin');
 
 let httpServer = http.createServer(function (request, response) {
 
-    logger('Request URL:', request.url);
+    if (WEBOX_MODE == 'debug') {
+        logger('Request URL:', request.url);
+    }
 
     let pdata = {
         url: new URL(request.url, `http://${request.headers.host}`),
@@ -26,7 +28,7 @@ httpServer.on('error', function (err) {
 
     if (err.code == 'EADDRINUSE') {
         logger('IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
-        logger('Failover:', WEBOX_HOST, ++WEBOX_PORT, '\n');
+        logger('Failover to:', WEBOX_HOST, ++WEBOX_PORT, '\n');
         httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
     }
 

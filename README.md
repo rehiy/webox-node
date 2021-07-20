@@ -1,4 +1,4 @@
-# Webox-node is a small HTTP server
+# Webox-node is a simple HTTP server
 
 Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.
 
@@ -34,9 +34,9 @@ Dynamically parse `*.cli` or '`*.cli.js`, and then output the result to browser.
 
 Dynamically parse `*.mod` or '`*.mod.js`, and then output the result to browser.
 
-## exit with 0 or 1
+## normal exit with 0 or 1
 
-Set `process.env.WEBOX_FAILED` to `1`, and exit with error code 1.
+Set `process.env.WEBOX_EXIT_CODE` to `1`, Even if the program exits normally, an error will be reported.
 
 ## config with file
 
@@ -44,6 +44,8 @@ Please set `process.env.WEBOX_CONF_FILE` to config file path.
 
 ```
 module.exports = {
+
+    WEBOX_MODE: 'debug',
 
     WEBOX_HOST: '127.0.0.1',
 
