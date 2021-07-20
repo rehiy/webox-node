@@ -1,25 +1,11 @@
 let { WEBOX_ERROR } = require('./config');
 
-function logger() {
-    let arg1 = ['[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']', 'Webox -'];
-    let arg2 = Array.prototype.slice.call(arguments);
-    console.log.apply(null, arg1.concat(arg2));
+function logger(...msg) {
+    console.log('[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']', 'Webox -', ...msg);
 }
 
-function httpMessage(response, code, text, type) {
-    if (WEBOX_ERROR[code]) {
-        text = WEBOX_ERROR[code].replace('%s', text);
-    }
-    response.writeHead(code || 200, {
-        'Content-Length': text.length,
-        'Content-Type': type || 'text/plain'
-    });
-    response.write(text);
-    response.end();
-}
-
-function dateFormat(fmt) {
-    let d = new Date();
+function dateFormat(fmt, date) {
+    let d = date || new Date();
     let o = {
         'M+': d.getMonth() + 1, //月
         'd+': d.getDate(), //日
@@ -40,7 +26,20 @@ function dateFormat(fmt) {
     return fmt;
 }
 
+function httpMessage(response, code, text, type) {
+    if (WEBOX_ERROR[code]) {
+        text = WEBOX_ERROR[code].replace('%s', text);
+    }
+    response.writeHead(code || 200, {
+        'Content-Length': text.length,
+        'Content-Type': type || 'text/plain'
+    });
+    response.write(text);
+    response.end();
+}
+
 module.exports = {
     logger: logger,
+    dateFormat: dateFormat,
     httpMessage: httpMessage
 };
