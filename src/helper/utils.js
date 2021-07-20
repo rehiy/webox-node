@@ -38,6 +38,10 @@ function httpMessage(response, code, text, type) {
     response.end();
 }
 
+if (console.light === undefined) {
+    console.light = Function;
+}
+
 module.exports = {
     logger: logger,
     dateFormat: dateFormat,
