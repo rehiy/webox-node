@@ -1,4 +1,4 @@
-let { WEBOX_PLUG } = require('../helper/config');
+let { WEBOX_PLUGIN } = require('../helper/config');
 
 let P_cli = require('../plugin/cli');
 let P_mod = require('../plugin/mod');
@@ -12,7 +12,7 @@ module.exports = function (pdata, request, response) {
 
     P_prepare(pdata, request, response);
 
-    for (let plug of WEBOX_PLUG) {
+    for (let plug of WEBOX_PLUGIN) {
         if (plug(pdata, request, response)) {
             return true;
         }

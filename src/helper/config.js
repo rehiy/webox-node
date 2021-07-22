@@ -23,8 +23,6 @@ module.exports = Object.assign({
 
     WEBOX_ROOT: 'webroot',
 
-    WEBOX_PLUG: [],
-
     WEBOX_INDEX: [
         'index.html',
         'index.htm'
@@ -38,6 +36,8 @@ module.exports = Object.assign({
         500: 'Internal Server Error: %s',
         503: 'Service Unavilable: %s'
     },
+
+    WEBOX_PLUGIN: [],
 
     WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
 

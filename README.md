@@ -53,8 +53,6 @@ module.exports = {
 
     WEBOX_ROOT: 'webroot',
 
-    WEBOX_PLUG: [],
-
     WEBOX_INDEX: [
         'index.html',
         'index.htm'
@@ -67,7 +65,9 @@ module.exports = {
         404: 'NO Found: %s',
         500: 'Internal Server Error: %s',
         503: 'Service Unavilable: %s'
-    }
+    },
+
+    WEBOX_PLUGIN: []
 
 };
 
