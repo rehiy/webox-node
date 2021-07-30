@@ -45,7 +45,7 @@ Please set `process.env.WEBOX_CONF_FILE` to config file path.
 ```
 module.exports = {
 
-    WEBOX_MODE: 'development', // production or development
+    WEBOX_MODE: 'development',
 
     WEBOX_HOST: '127.0.0.1',
 
@@ -65,9 +65,7 @@ module.exports = {
         404: 'NO Found: %s',
         500: 'Internal Server Error: %s',
         503: 'Service Unavilable: %s'
-    },
-
-    WEBOX_PLUGIN: []
+    }
 
 };
 

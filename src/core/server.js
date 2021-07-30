@@ -4,7 +4,7 @@ let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
 
 let { logger } = require('../helper/utils');
 
-let { handleCaller } = require('./handle');
+let handleCaller = require('./handle').call;
 
 /////////////////////////////////////////////////////////////
 // create server

@@ -14,8 +14,11 @@ require('./helper/check');
 
 /////////////////////////////////////////////////////////////
 
+let use = require('./core/handle').push;
+
 let server = require('./core/server');
 
 module.exports = {
-    init: server
+    init: server,
+    use: use
 };

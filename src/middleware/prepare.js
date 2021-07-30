@@ -19,7 +19,7 @@ function fixpath(file, suff) {
 }
 
 /**
- * 预处理HTTP请求
+ * 解析HTTP请求
  * @param {http.IncomingMessage} request HTTP请求
  * @param {http.ServerResponse} response HTTP响应
  */
@@ -54,6 +54,6 @@ function handle(request, response) {
 /////////////////////////////////////////////////////////////
 
 module.exports = {
-    route: /.*/,
+    route: '*',
     handle: handle
 };

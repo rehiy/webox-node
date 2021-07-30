@@ -7,7 +7,7 @@ let { httpMessage } = require('../helper/utils');
 /////////////////////////////////////////////////////////////
 
 /**
- * 预处理HTTP请求
+ * 处理静态文件
  * @param {http.IncomingMessage} request HTTP请求
  * @param {http.ServerResponse} response HTTP响应
  */
@@ -43,6 +43,6 @@ function handle(request, response) {
 /////////////////////////////////////////////////////////////
 
 module.exports = {
-    route: /.*/,
+    route: '*',
     handle: handle
 };

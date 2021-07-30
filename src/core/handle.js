@@ -1,24 +1,27 @@
-let { WEBOX_PLUGIN } = require('../helper/config');
+let M_prepare = require('../middleware/prepare');
+let M_static = require('../middleware/static');
 
-let P_prepare = require('../middleware/prepare');
-let P_static = require('../middleware/static');
-
-let P_cgi = require('../middleware/use.cgi');
-let P_cjs = require('../middleware/use.cjs');
+let M_cgi = require('../middleware/use.cgi');
+let M_cjs = require('../middleware/use.cjs');
 
 /////////////////////////////////////////////////////////////
 
-WEBOX_PLUGIN.push(P_cgi, P_cjs);
+let handlers = [
+    M_cgi, M_cjs
+];
 
-function caller(request, response) {
+function push(handler) {
+    handlers.splice(-2, 0, handler);
+}
 
-    P_prepare.handle(request, response);
+function call(request, response) {
 
+    M_prepare.handle(request, response);
+
+    let filename = request.filename;
     let pathname = request.objectUrl.pathname;
 
-    for (let plug of WEBOX_PLUGIN) {
-
-        let { route, handle } = plug;
+    for (let { route, handle } of handlers) {
 
         if (route instanceof RegExp) {
             if (route.test(pathname) === false) {
@@ -26,14 +29,14 @@ function caller(request, response) {
             }
         }
 
-        if (typeof route === 'function') {
-            if (route(pathname) !== true) {
+        if (route instanceof Function) {
+            if (route(pathname, filename) === false) {
                 continue;
             }
         }
 
         if (typeof route === 'string') {
-            if (route !== pathname) {
+            if (route !== '*' && route !== pathname) {
                 continue;
             }
         }
@@ -44,12 +47,13 @@ function caller(request, response) {
 
     }
 
-    P_static.handle(request, response);
+    M_static.handle(request, response);
 
 }
 
 /////////////////////////////////////////////////////////////
 
 module.exports = {
-    handleCaller: caller
+    push: push,
+    call: call
 };

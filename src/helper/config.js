@@ -25,7 +25,9 @@ config = Object.assign({
 
     WEBOX_INDEX: [
         'index.html',
-        'index.htm'
+        'index.htm',
+        '.cjs',
+        '.cgi'
     ],
 
     WEBOX_ERROR: {
@@ -37,11 +39,11 @@ config = Object.assign({
         503: 'Service Unavilable: %s'
     },
 
-    WEBOX_PLUGIN: [],
-
     WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
 
 }, config);
+
+// 解析脚本目录
 
 config.WEBOX_ROOT = path.resolve(
     config.WEBOX_ROOT
