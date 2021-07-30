@@ -69,21 +69,26 @@ function parseJSON(str) {
  * 输出HTTP消息
  * @param {http.ServerResponse} response 响应对象
  * @param {number} code 状态码
- * @param {string} text 输出内容
+ * @param {string | object} output 输出内容
  * @param {string} mime 内容类型
  */
-function httpMessage(response, code, text, mime) {
+function httpMessage(response, code, output, mime) {
+
+    if (typeof output === 'object') {
+        output = JSON.stringify(output);
+        mime = 'application/json';
+    }
 
     if (WEBOX_ERROR[code]) {
-        text = WEBOX_ERROR[code].replace('%s', text);
+        output = WEBOX_ERROR[code].replace('%s', output);
     }
 
     response.writeHead(code || 200, {
-        'Content-Length': text.length,
+        'Content-Length': output.length,
         'Content-Type': mime || 'text/plain'
     });
 
-    response.write(text);
+    response.write(output);
     response.end();
 
 }
