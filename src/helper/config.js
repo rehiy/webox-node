@@ -25,9 +25,7 @@ config = Object.assign({
 
     WEBOX_INDEX: [
         'index.html',
-        'index.htm',
-        '.cjs',
-        '.cgi'
+        'index.htm'
     ],
 
     WEBOX_ERROR: {
