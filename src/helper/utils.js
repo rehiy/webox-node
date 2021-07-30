@@ -1,21 +1,29 @@
-let { WEBOX_ERROR } = require('./config');
+let { WEBOX_MODE, WEBOX_ERROR } = require('./config');
 
-function logger(...msg) {
-    console.log('[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']', 'Webox -', ...msg);
-}
+/**
+ * 控制台日志
+ * @param {number} level 日志级别
+ * @param  {...any} msg 日志内容
+ */
+function logger(level, ...msg) {
 
-function parseJSON(str) {
-    if (typeof str == 'string') {
-        try {
-            return JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
+    if (WEBOX_MODE !== 'development' && level > 0) {
+        return;
     }
-    return false;
+
+    let time = '[' + dateFormat('yyyy-MM-dd hh:mm:ss') + ']';
+    console.log(time, 'Webox -', ...msg);
+
 }
 
+/**
+ * 时间格式化
+ * @param {string} fmt 格式化选项
+ * @param {Date} date 日期对象，默认为当前时间
+ * @returns 格式化后的字符串
+ */
 function dateFormat(fmt, date) {
+
     let d = date || new Date();
     let o = {
         'M+': d.getMonth() + 1, //月
@@ -26,29 +34,63 @@ function dateFormat(fmt, date) {
         'q+': Math.floor((d.getMonth() + 3) / 3), //季度
         'S': d.getMilliseconds() //毫秒
     };
+
     if (/(y+)/.test(fmt)) { //年
         fmt = fmt.replace(RegExp.$1, (d.getFullYear() + '').substr(4 - RegExp.$1.length));
     }
+
     for (let k in o) {
         if (new RegExp('(' + k + ')').test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
         }
     }
+
     return fmt;
+
 }
 
-function httpMessage(response, code, text, type) {
+/**
+ * 尝试解析JSON
+ * @param {string} str JSON字符串
+ * @returns 成功返回结果，失败返回`undefined`
+ */
+function parseJSON(str) {
+
+    if (typeof str === 'string') {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+        }
+    }
+
+}
+
+/**
+ * 输出HTTP消息
+ * @param {http.ServerResponse} response 响应对象
+ * @param {number} code 状态码
+ * @param {string} text 输出内容
+ * @param {string} mime 内容类型
+ */
+function httpMessage(response, code, text, mime) {
+
     if (WEBOX_ERROR[code]) {
         text = WEBOX_ERROR[code].replace('%s', text);
     }
+
     response.writeHead(code || 200, {
         'Content-Length': text.length,
-        'Content-Type': type || 'text/plain'
+        'Content-Type': mime || 'text/plain'
     });
+
     response.write(text);
     response.end();
+
 }
 
+/**
+ * 仅用于兼容老版调试工具
+ */
 if (console.light === undefined) {
     console.light = Function;
 }

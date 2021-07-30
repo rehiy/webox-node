@@ -1,27 +1,8 @@
 /**
  * Webox - HTTP Server
  * @author rehiy <wang@rehiy.com>
- * @Website http://www.rehiy.com
+ * @Website http://www.rehiy.com/webox
  */
-
-'use strict';
-
-// set title
-process.title = 'Webox - HTTP Server';
-
-// set env var for ORIGINAL cwd
-process.env.INIT_CWD = process.cwd();
-
-// normal exit with 0 or 1
-process.once('exit', code => {
-    logger('Service Stopped');
-    if (code === 0 && process.env.WEBOX_EXIT_CODE) {
-        process.exit(1);
-    }
-});
-
-/////////////////////////////////////////////////////////////
-// code from www.rehiy.com
 
 let config = require('./helper/config');
 
@@ -40,5 +21,8 @@ if (params[1]) {
     config.WEBOX_ROOT = params[1];
 }
 
-require('./helper/check');
-require('./webox/core');
+/////////////////////////////////////////////////////////////
+
+let app = require('./app');
+
+app.init();

@@ -1,0 +1,1 @@
+console.log('hello, cgi.js', process.argv);

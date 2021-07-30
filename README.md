@@ -26,13 +26,13 @@ The web server will listen on `0.0.0.0:80` and use `./public` as the root direct
 
 Other users can use your internal ip to access your published site.
 
-## execute js as cli script
+## execute js as cgi script
 
-Dynamically parse `*.cli` or '`*.cli.js`, and then output the result to browser.
+Dynamically parse `*.cgi` or '`*.cgi.js`, and then output the result to browser.
 
 ## load js as commonjs module
 
-Dynamically parse `*.mod` or '`*.mod.js`, and then output the result to browser.
+Dynamically parse `*.cjs` or '`*.cjs.js`, and then output the result to browser.
 
 ## normal exit with 0 or 1
 
@@ -45,7 +45,7 @@ Please set `process.env.WEBOX_CONF_FILE` to config file path.
 ```
 module.exports = {
 
-    WEBOX_MODE: 'debug',
+    WEBOX_MODE: 'development', // production or development
 
     WEBOX_HOST: '127.0.0.1',
 

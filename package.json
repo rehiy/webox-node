@@ -2,7 +2,7 @@
     "name": "webox-node",
     "description": "Webox-node is a simple HTTP server. Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.",
     "homepage": "https://github.com/rehiy/webox-node",
-    "version": "2.5.8",
+    "version": "3.0.1",
     "license": "MIT License",
     "private": true,
     "author": {
@@ -41,7 +41,7 @@
         "rollup-plugin-terser": "7.0.2",
         "shelljs": "^0.8.4"
     },
-    "main": "src/index.js",
+    "main": "src/app.js",
     "bin": {
         "webox": "./src/index.js"
     }

@@ -1,1 +1,0 @@
-console.log('hello, cli.js', process.argv);

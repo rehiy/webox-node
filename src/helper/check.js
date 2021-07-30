@@ -1,6 +1,6 @@
 let https = require('https');
 
-let { WEBOX_MODE, WEBOX_CHECK_API } = require('../helper/config');
+let { WEBOX_CHECK_API } = require('./config');
 
 let { logger, parseJSON } = require('./utils');
 
@@ -27,8 +27,6 @@ let req = https.get(WEBOX_CHECK_API + '&version=dev', res => {
 
 req.on('error', e => {
 
-    if (WEBOX_MODE == 'debug') {
-        logger('Updater Error:', e.message);
-    }
+    logger(1, 'Checker Error:', e.message);
 
 });

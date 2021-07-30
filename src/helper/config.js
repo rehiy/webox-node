@@ -15,7 +15,7 @@ if (cf && fs.existsSync(cf)) {
 
 module.exports = Object.assign({
 
-    WEBOX_MODE: 'debug', // prod or debug
+    WEBOX_MODE: process.env.NODE_ENV || 'development', // production or development
 
     WEBOX_HOST: '127.0.0.1',
 

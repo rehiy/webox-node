@@ -1,16 +1,16 @@
 import { rm } from 'shelljs';
 
+import { terser } from 'rollup-plugin-terser';
+
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-
-import { terser } from "rollup-plugin-terser";
 
 //////////////////////////////////////////////////////////////////////
 
 rm('-rf', 'dist');
 
 export default {
-    input: 'src/index.js',
+    input: ['src/app.js', 'src/index.js'],
     output: {
         dir: 'dist',
         format: 'cjs',
