@@ -41,7 +41,7 @@ function handle(request, response) {
 
     child.on('exit', code => {
         code === 0 ? 200 : 503;
-        httpMessage(response, code, text);
+        httpMessage(response, text, code);
     });
 
     return true;

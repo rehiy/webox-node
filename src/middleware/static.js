@@ -17,14 +17,14 @@ function handle(request, response) {
 
     //找不到文件
     if (filename === '') {
-        httpMessage(response, 404, objectUrl.pathname);
+        httpMessage(response, objectUrl.pathname, 404);
         return true;
     }
 
     //流式发送文件
     fs.createReadStream(filename)
         .on('error', err => {
-            httpMessage(response, 503, objectUrl.pathname);
+            httpMessage(response, objectUrl.pathname, 503);
         })
         .on('data', chunk => {
             response.writeHead(200, {

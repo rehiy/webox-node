@@ -23,8 +23,8 @@ function handle(request, response) {
 
     let child = require(filename);
 
-    child(objectUrl, (code, text) => {
-        httpMessage(response, code, text)
+    child(objectUrl, (text, code) => {
+        httpMessage(response, text, code);
     });
 
     return true;
