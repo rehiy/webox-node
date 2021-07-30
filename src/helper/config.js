@@ -1,21 +1,21 @@
-let RC = {};
-
 let fs = require('fs');
 let path = require('path');
 
 // 加载用户配置
 
-let cf = process.env.WEBOX_CONF_FILE;
+let config = {};
 
-if (cf && fs.existsSync(cf)) {
-    RC = require(cf);
+let CF = process.env.WEBOX_CONF_FILE;
+if (CF && fs.existsSync(CF)) {
+    config = require(CF);
 }
 
-// 导出配置参数
+// 合并配置参数
 
-module.exports = Object.assign({
+config = Object.assign({
 
-    WEBOX_MODE: process.env.NODE_ENV || 'development', // production or development
+    // production or development
+    WEBOX_MODE: process.env.NODE_ENV || 'development',
 
     WEBOX_HOST: '127.0.0.1',
 
@@ -41,10 +41,11 @@ module.exports = Object.assign({
 
     WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
 
-}, RC);
+}, config);
 
-// 修正绝对路径
-
-module.exports.WEBOX_ROOT = path.resolve(
-    module.exports.WEBOX_ROOT
+config.WEBOX_ROOT = path.resolve(
+    config.WEBOX_ROOT
 );
+
+// 导出配置
+module.exports = config;

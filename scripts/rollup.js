@@ -10,12 +10,12 @@ import resolve from '@rollup/plugin-node-resolve';
 rm('-rf', 'dist');
 
 export default {
-    input: ['src/app.js', 'src/index.js'],
+    input: ['src/index.js', 'src/cli.js'],
     output: {
         dir: 'dist',
         format: 'cjs',
         sourcemap: true,
-        exports: 'named'
+        exports: 'auto'
     },
     external: [
     ],

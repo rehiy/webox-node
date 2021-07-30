@@ -4,25 +4,18 @@
  * @Website http://www.rehiy.com/webox
  */
 
-let config = require('./helper/config');
+'use strict';
 
-let params = process.argv.slice(2);
-let listen = params[0] ? params[0].split(':') : [];
+// load env
+require('./env');
 
-if (listen[0]) {
-    config.WEBOX_HOST = listen[0];
-}
-
-if (listen[1] && listen[1] > 0) {
-    config.WEBOX_PORT = listen[1];
-}
-
-if (params[1]) {
-    config.WEBOX_ROOT = params[1];
-}
+// security check
+require('./helper/check');
 
 /////////////////////////////////////////////////////////////
 
-let app = require('./app');
+let server = require('./core/server');
 
-app.init();
+module.exports = {
+    init: server
+};

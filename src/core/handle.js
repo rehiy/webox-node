@@ -10,7 +10,7 @@ let P_cjs = require('../middleware/use.cjs');
 
 WEBOX_PLUGIN.push(P_cgi, P_cjs);
 
-module.exports.handleCaller = function (request, response) {
+function caller(request, response) {
 
     P_prepare.handle(request, response);
 
@@ -46,4 +46,10 @@ module.exports.handleCaller = function (request, response) {
 
     P_static.handle(request, response);
 
+}
+
+/////////////////////////////////////////////////////////////
+
+module.exports = {
+    handleCaller: caller
 };
