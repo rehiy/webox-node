@@ -1,1 +1,1 @@
-console.log('hello, cgi.js', process.argv);
+console.log('hello.cgi', process.argv);

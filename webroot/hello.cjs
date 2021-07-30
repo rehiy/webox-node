@@ -1,3 +1,3 @@
-module.exports = function (query, next) {
-    next(200, 'hello, cjs.js');
+module.exports = function (obj, next) {
+    next(200, { file: 'hello.cjs', search: obj.search });
 };

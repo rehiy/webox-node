@@ -23,26 +23,14 @@ function call(request, response) {
 
     for (let { route, handle } of handlers) {
 
-        if (route instanceof RegExp) {
-            if (route.test(pathname) === false) {
-                continue;
+        if (
+            (route instanceof RegExp && route.test(pathname)) ||
+            (route instanceof Function && route(pathname, filename)) ||
+            (typeof route === 'string' && (route === '*' || route === pathname))
+        ) {
+            if (handle(request, response)) {
+                return true;
             }
-        }
-
-        if (route instanceof Function) {
-            if (route(pathname, filename) === false) {
-                continue;
-            }
-        }
-
-        if (typeof route === 'string') {
-            if (route !== '*' && route !== pathname) {
-                continue;
-            }
-        }
-
-        if (handle(request, response)) {
-            return true;
         }
 
     }

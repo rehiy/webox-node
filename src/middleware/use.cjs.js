@@ -19,11 +19,11 @@ function route(p, f) {
  */
 function handle(request, response) {
 
-    let { filename } = request;
+    let { filename, objectUrl } = request;
 
     let child = require(filename);
 
-    child(request, (code, text) => {
+    child(objectUrl, (code, text) => {
         httpMessage(response, code, text)
     });
 
