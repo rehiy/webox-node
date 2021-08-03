@@ -1,4 +1,4 @@
-# Webox-node is a simple HTTP server
+# Webox-node is a Dynamic JS HTTP server
 
 Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.
 
