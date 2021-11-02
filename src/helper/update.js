@@ -1,10 +1,10 @@
 let https = require('https');
 
-let { WEBOX_CHECK_API } = require('./config');
+let { config } = require('./config');
 
 let { logger, parseJSON } = require('./utils');
 
-let req = https.get(WEBOX_CHECK_API + '&version=dev', res => {
+let req = https.get(config.updateUrl + '&version=dev', res => {
 
     if (res.statusCode != 200) {
         return;
@@ -27,6 +27,6 @@ let req = https.get(WEBOX_CHECK_API + '&version=dev', res => {
 
 req.on('error', e => {
 
-    logger(1, 'Checker Error:', e.message);
+    logger(1, 'Update Error:', e.message);
 
 });

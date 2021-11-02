@@ -1,47 +1,54 @@
 let http = require('http');
 
-let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
+let { config, assign } = require('../helper/config');
 
 let { logger } = require('../helper/utils');
 
 let handleCaller = require('./handle').call;
 
 /////////////////////////////////////////////////////////////
-// create server
 
-let httpServer = http.createServer((request, response) => {
+/**
+ * 创建Http服务器
+ * 
+ * @param {object} option 用户配置
+ */
+function listen(option) {
 
-    logger(1, 'Request URL:', request.url);
+    option && assign(option);
 
-    handleCaller(request, response);
+    let serve = http.createServer((request, response) => {
 
-});
+        logger(1, 'Request URL:', request.url);
 
-httpServer.on('error', err => {
+        handleCaller(request, response);
 
-    if (err.code === 'EADDRINUSE') {
-        logger(0, 'IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
-        logger(0, 'Failover to:', WEBOX_HOST, ++WEBOX_PORT, '\n');
-        httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
-    }
+    });
 
-});
+    serve.on('error', err => {
 
-httpServer.on('listening', () => {
+        if (err.code === 'EADDRINUSE') {
+            logger(0, 'IP-Port in use:', config.host, config.port);
+            logger(0, 'Failover to:', config.host, ++config.port, '\n');
+            serve.listen(config.port, config.host, 1024);
+        }
 
-    let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
-    let port = WEBOX_PORT - 80 === 0 ? '' : ':' + WEBOX_PORT;
+    });
 
-    logger(0, 'Server started:', 'http://' + host + port);
-    logger(0, 'Root Directory:', WEBOX_ROOT, '\n');
+    serve.on('listening', () => {
 
-});
+        let host = config.host === '0.0.0.0' ? '127.0.0.1' : config.host;
+        let port = config.port - 80 === 0 ? '' : ':' + config.port;
+
+        logger(0, 'Server started:', 'http://' + host + port);
+        logger(0, 'Root Directory:', config.root, '\n');
+
+    });
+
+    serve.listen(config.port, config.host, 1024);
+
+}
 
 /////////////////////////////////////////////////////////////
-// start server
 
-module.exports = function () {
-
-    httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
-
-};
+module.exports = listen;

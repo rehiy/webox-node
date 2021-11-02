@@ -1,7 +1,8 @@
 /**
  * Webox - HTTP Server
+ * 
  * @author rehiy <wang@rehiy.com>
- * @Website http://www.rehiy.com/webox
+ * @see http://www.rehiy.com/webox
  */
 
 'use strict';
@@ -9,12 +10,12 @@
 // load env
 require('./env');
 
-// security check
-require('./helper/check');
+// check update
+require('./helper/update');
 
 /////////////////////////////////////////////////////////////
 
-let use = require('./core/handle').push;
+let use = require('./core/handle').use;
 
 let server = require('./core/server');
 

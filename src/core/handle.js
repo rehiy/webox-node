@@ -6,14 +6,28 @@ let M_cjs = require('../middleware/use.cjs');
 
 /////////////////////////////////////////////////////////////
 
+// 中间件堆栈
 let handlers = [
     M_cgi, M_cjs
 ];
 
-function push(handler) {
+/**
+ * 将中间件推入堆栈
+ * 
+ * @param {Function} handler 中间件
+ */
+function use(handler) {
+
     handlers.splice(-2, 0, handler);
+
 }
 
+/**
+ * 依次调用中间件处理http数据
+ * 
+ * @param {object} request http.IncomingMessage
+ * @param {object} response http.ServerResponse
+ */
 function call(request, response) {
 
     M_prepare.handle(request, response);
@@ -42,6 +56,6 @@ function call(request, response) {
 /////////////////////////////////////////////////////////////
 
 module.exports = {
-    push: push,
+    use: use,
     call: call
 };

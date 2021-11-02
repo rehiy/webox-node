@@ -1,28 +1,29 @@
 /**
  * Webox - HTTP Server
+ *
  * @author rehiy <wang@rehiy.com>
- * @Website http://www.rehiy.com/webox
+ * @see http://www.rehiy.com/webox
  */
 
-let config = require('./helper/config');
+let option = {};
 
 let params = process.argv.slice(2);
 let listen = params[0] ? params[0].split(':') : [];
 
 if (listen[0]) {
-    config.WEBOX_HOST = listen[0];
+    option.host = listen[0];
 }
 
 if (listen[1] && listen[1] > 0) {
-    config.WEBOX_PORT = listen[1];
+    option.port = listen[1];
 }
 
 if (params[1]) {
-    config.WEBOX_ROOT = params[1];
+    option.root = params[1];
 }
 
 /////////////////////////////////////////////////////////////
 
 let app = require('./index');
 
-app.init();
+app.init(option);

@@ -1,13 +1,21 @@
-let { WEBOX_MODE, WEBOX_ERROR } = require('./config');
+let { config } = require('./config');
 
 /**
- * 控制台日志
+ * 兼容调试工具
+ */
+if (console.fight === undefined) {
+    console.fight = Function;
+}
+
+/**
+ * 输出格式日志
+ * 
  * @param {number} level 日志级别
- * @param  {...any} msg 日志内容
+ * @param {...any} msg 日志内容
  */
 function logger(level, ...msg) {
 
-    if (WEBOX_MODE !== 'development' && level > 0) {
+    if (config.mode !== 'development' && level > 0) {
         return;
     }
 
@@ -17,10 +25,28 @@ function logger(level, ...msg) {
 }
 
 /**
+ * 尝试解析JSON
+ * 成功返回结果，失败返回`undefined`
+ * 
+ * @param {string} str JSON字符串
+ */
+function parseJSON(str) {
+
+    if (typeof str === 'string') {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+            // error
+        }
+    }
+
+}
+
+/**
  * 时间格式化
+ * 
  * @param {string} fmt 格式化选项
  * @param {Date} date 日期对象，默认为当前时间
- * @returns 格式化后的字符串
  */
 function dateFormat(fmt, date) {
 
@@ -49,63 +75,10 @@ function dateFormat(fmt, date) {
 
 }
 
-/**
- * 尝试解析JSON
- * @param {string} str JSON字符串
- * @returns 成功返回结果，失败返回`undefined`
- */
-function parseJSON(str) {
-
-    if (typeof str === 'string') {
-        try {
-            return JSON.parse(str);
-        } catch (e) {
-        }
-    }
-
-}
-
-/**
- * 输出HTTP消息
- * @param {http.ServerResponse} response 响应对象
- * @param {string | object} output 输出内容
- * @param {number} code 状态码
- * @param {string} mime 内容类型
- */
-function httpMessage(response, output, code, mime) {
-
-    code = code || 200;
-    mime = mime || 'text/plain';
-
-    if (typeof output === 'object') {
-        output = JSON.stringify(output);
-        mime = 'application/json';
-    }
-
-    if (mime == 'text/plain' && WEBOX_ERROR[code]) {
-        output = WEBOX_ERROR[code].replace('%s', output);
-    }
-
-    response.writeHead(code, {
-        'Content-Length': output.length,
-        'Content-Type': mime
-    });
-
-    response.write(output);
-    response.end();
-
-}
-
-/**
- * 仅用于兼容老版调试工具
- */
-if (console.light === undefined) {
-    console.light = Function;
-}
+/////////////////////////////////////////////////////////////
 
 module.exports = {
     logger: logger,
     parseJSON: parseJSON,
-    dateFormat: dateFormat,
-    httpMessage: httpMessage
+    dateFormat: dateFormat
 };

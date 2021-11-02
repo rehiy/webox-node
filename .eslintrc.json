@@ -1,0 +1,24 @@
+{
+    "root": true,
+    "overrides": [
+        {
+            "env": {
+                "node": true
+            },
+            "files": [
+                "src/**/*.js"
+            ],
+            "extends": [
+                "eslint:recommended",
+                "plugin:import/recommended",
+                "plugin:jsdoc/recommended"
+            ],
+            "plugins": [
+                "prefer-arrow"
+            ],
+            "rules": {
+                "jsdoc/require-returns": 0
+            }
+        }
+    ]
+}

@@ -1,23 +1,27 @@
 let { exec } = require('child_process');
 
-let { httpMessage } = require('../helper/utils');
+let { httpMessage } = require('../helper/output');
 
 /////////////////////////////////////////////////////////////
 
 /**
  * 路由检查
+ * 
  * @param {string} p pathname
  * @param {string} f filename
- * @returns 是否调用处理函数
+ * @returns {boolean} 是否调用处理函数
  */
- function route(p, f) {
+function route(p, f) {
+
     return f && /\.cgi(\.js)?$/.test(f);
+
 }
 
 /**
  * 处理HTTP请求
- * @param {http.IncomingMessage} request HTTP请求
- * @param {http.ServerResponse} response HTTP响应
+ * 
+ * @param {object} request http.IncomingMessage
+ * @param {object} response http.ServerResponse
  */
 function handle(request, response) {
 

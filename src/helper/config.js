@@ -1,34 +1,23 @@
-let fs = require('fs');
 let path = require('path');
 
-// 加载用户配置
-
-let config = {};
-
-let CF = process.env.WEBOX_CONF_FILE;
-if (CF && fs.existsSync(CF)) {
-    config = require(CF);
-}
-
-// 合并配置参数
-
-config = Object.assign({
+// 默认配置
+let config = {
 
     // production or development
-    WEBOX_MODE: process.env.NODE_ENV || 'development',
+    mode: process.env.NODE_ENV || 'development',
 
-    WEBOX_HOST: '127.0.0.1',
+    host: '127.0.0.1',
 
-    WEBOX_PORT: 80,
+    port: 80,
 
-    WEBOX_ROOT: 'webroot',
+    root: 'webroot',
 
-    WEBOX_INDEX: [
+    index: [
         'index.html',
         'index.htm'
     ],
 
-    WEBOX_ERROR: {
+    error: {
         200: '%s',
         400: 'Bad Request: %s',
         403: 'Forbidden : %s',
@@ -37,15 +26,22 @@ config = Object.assign({
         503: 'Service Unavilable: %s'
     },
 
-    WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
+    updateUrl: 'https://api.vmlu.com/webox/?platform=node'
 
-}, config);
+};
 
-// 解析脚本目录
+// 获取绝对路径
+config.root = path.resolve(config.root);
 
-config.WEBOX_ROOT = path.resolve(
-    config.WEBOX_ROOT
-);
+/////////////////////////////////////////////////////////////
 
-// 导出配置
-module.exports = config;
+// 导出配置工具
+module.exports = {
+    config: config,
+    assign: function (obj) {
+        if (obj.root) {
+            obj.root = path.resolve(config.root);
+        }
+        Object.assign(config, obj);
+    }
+};

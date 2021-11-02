@@ -2,14 +2,15 @@ let fs = require('fs');
 
 let getMimeType = require('../helper/mime');
 
-let { httpMessage } = require('../helper/utils');
+let { httpMessage } = require('../helper/output');
 
 /////////////////////////////////////////////////////////////
 
 /**
  * 处理静态文件
- * @param {http.IncomingMessage} request HTTP请求
- * @param {http.ServerResponse} response HTTP响应
+ * 
+ * @param {object} request http.IncomingMessage
+ * @param {object} response http.ServerResponse
  */
 function handle(request, response) {
 
@@ -22,23 +23,26 @@ function handle(request, response) {
     }
 
     //流式发送文件
-    fs.createReadStream(filename)
-        .on('error', err => {
-            httpMessage(response, objectUrl.pathname, 503);
-        })
-        .on('data', chunk => {
-            response.writeHead(200, {
-                'Content-Type': getMimeType(filename)
-            });
-            response.write(chunk);
-        })
-        .on('end', () => {
-            response.end();
+    let stream = fs.createReadStream(filename);
+
+    stream.on('error', () => {
+        httpMessage(response, objectUrl.pathname, 503);
+    });
+
+    stream.on('data', chunk => {
+        response.writeHead(200, {
+            'Content-Type': getMimeType(filename)
         });
+        response.write(chunk);
+    });
+
+    stream.on('end', () => {
+        response.end();
+    });
 
     return true;
 
-};
+}
 
 /////////////////////////////////////////////////////////////
 
