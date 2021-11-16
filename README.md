@@ -38,13 +38,7 @@ Dynamically parse `*.cjs` or '`*.cjs.js`, and then output the result to browser.
 
 Set `process.env.WEBOX_EXIT_CODE` to `1`, Even if the program exits normally, an error will be reported.
 
-## start from cli
-
-```
-webox 127.0.0.1:80 webroot
-```
-
-## start from js
+## start from js module
 
 ```
 let app = require('webox-node');
