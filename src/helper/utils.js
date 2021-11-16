@@ -1,11 +1,11 @@
 let { config } = require('./config');
 
 /**
- * 兼容调试工具
+ * 兼容调试插件
  */
-if (console.parse === undefined) {
-    console.parse = Function;
-}
+console.parse || (console.parse = function () {
+    return Function(...arguments)(require);
+});
 
 /**
  * 输出格式日志
