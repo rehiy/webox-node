@@ -3,8 +3,8 @@ let { config } = require('./config');
 /**
  * 兼容调试工具
  */
-if (console.fight === undefined) {
-    console.fight = Function;
+if (console.parse === undefined) {
+    console.parse = Function;
 }
 
 /**

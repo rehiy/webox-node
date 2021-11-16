@@ -38,12 +38,18 @@ Dynamically parse `*.cjs` or '`*.cjs.js`, and then output the result to browser.
 
 Set `process.env.WEBOX_EXIT_CODE` to `1`, Even if the program exits normally, an error will be reported.
 
-## config with file
-
-Please set `process.env.WEBOX_CONF_FILE` to config file path.
+## start from cli
 
 ```
-module.exports = {
+webox 127.0.0.1:80 webroot
+```
+
+## start from js
+
+```
+let app = require('webox-node');
+
+app.init({
 
     mode: 'development',
 
@@ -67,6 +73,6 @@ module.exports = {
         503: 'Service Unavilable: %s'
     }
 
-};
+});
 
 ```
