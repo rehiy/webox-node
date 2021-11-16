@@ -45,20 +45,20 @@ Please set `process.env.WEBOX_CONF_FILE` to config file path.
 ```
 module.exports = {
 
-    WEBOX_MODE: 'development',
+    mode: 'development',
 
-    WEBOX_HOST: '127.0.0.1',
+    host: '127.0.0.1',
 
-    WEBOX_PORT: 80,
+    port: 80,
 
-    WEBOX_ROOT: 'webroot',
+    root: 'webroot',
 
-    WEBOX_INDEX: [
+    index: [
         'index.html',
         'index.htm'
     ],
 
-    WEBOX_ERROR: {
+    error: {
         200: '%s',
         400: 'Bad Request: %s',
         403: 'Forbidden : %s',
