@@ -40,7 +40,7 @@ module.exports = {
     config: config,
     assign: function (obj) {
         if (obj.root) {
-            obj.root = path.resolve(config.root);
+            obj.root = path.resolve(obj.root);
         }
         Object.assign(config, obj);
     }
