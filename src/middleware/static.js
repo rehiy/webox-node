@@ -21,15 +21,17 @@ function handle(request, response) {
         return true;
     }
 
+    //输出文件头
+    response.writeHead(200, {
+        'Content-Type': getMimeType(filename)
+    });
+
     //流式发送文件
     fs.createReadStream(filename)
         .on('error', err => {
             httpMessage(response, objectUrl.pathname, 503);
         })
         .on('data', chunk => {
-            response.writeHead(200, {
-                'Content-Type': getMimeType(filename)
-            });
             response.write(chunk);
         })
         .on('end', () => {
