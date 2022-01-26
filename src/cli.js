@@ -23,6 +23,6 @@ if (params[1]) {
 
 /////////////////////////////////////////////////////////////
 
-let app = require('./index');
+let app = require('./main');
 
 app.init();

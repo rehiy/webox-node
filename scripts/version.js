@@ -19,7 +19,13 @@ let package = require('../package.json');
 
     fs.writeFileSync('dist/package.json', JSON.stringify(package));
 
-    // update index.js
+}()
+
+! function () {
+
+    let text = fs.readFileSync('dist/cli.js').toString();
+    text = `#!/usr/bin/env node\n` + text;
+    fs.writeFileSync('dist/cli.js', text);
 
 }()
 
@@ -27,12 +33,11 @@ let package = require('../package.json');
 
     let version = package.version;
 
-    let text = fs.readFileSync('dist/index.js').toString();
+    let text = fs.readFileSync('dist/main.js').toString();
     text = text.replace('&version=dev', `&version=${version}`);
-    fs.writeFileSync('dist/index.js', text);
+    fs.writeFileSync('dist/main.js', text);
 
 }()
-
 
 ! function () {
 

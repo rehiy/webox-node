@@ -2,7 +2,7 @@ let fs = require('fs');
 
 let getMimeType = require('../helper/mime');
 
-let { httpMessage } = require('../helper/utils');
+let { httpMessage, logger } = require('../helper/utils');
 
 /////////////////////////////////////////////////////////////
 
@@ -25,6 +25,8 @@ function handle(request, response) {
     response.writeHead(200, {
         'Content-Type': getMimeType(filename)
     });
+
+    logger(1, 'Send static file:', filename);
 
     //流式发送文件
     fs.createReadStream(filename)
