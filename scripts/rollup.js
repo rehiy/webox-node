@@ -29,7 +29,7 @@ export default {
         }),
         copy({
             targets: [
-                { src: 'README.md', dest: 'dist/README.md' }
+                { src: 'README.md', dest: 'dist' }
             ]
         }),
         terser()
