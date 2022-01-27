@@ -25,13 +25,13 @@ function fixpath(file, suff) {
  */
 function handle(request, response) {
 
-    let objectUrl = new URL(request.url, `http://${request.headers.host}`);
+    let requestURL = new URL(request.url, `http://${request.headers.host}`);
 
-    let filename = path.join(WEBOX_ROOT, objectUrl.pathname);
+    let filename = path.join(WEBOX_ROOT, requestURL.pathname);
 
     //添加基础属性
     request.filename = '';
-    request.objectUrl = objectUrl;
+    request.requestURL = requestURL;
 
     //文件存在直接返回
     let filestat = fs.existsSync(filename) && fs.lstatSync(filename);

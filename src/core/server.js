@@ -11,9 +11,27 @@ let handleCaller = require('./handle').call;
 
 let httpServer = http.createServer((request, response) => {
 
-    logger(1, 'Request URL:', request.url);
+    logger(1, request.method, '-', request.url);
 
-    handleCaller(request, response);
+    switch (request.method) {
+        case 'POST':
+            let body = '';
+            request.addListener('data', data => {
+                body += data
+            });
+            request.addListener('end', () => {
+                try {
+                    request.postData = JSON.parse(body);
+                } catch (e) {
+                    logger(0, 'POST Error: Only JSON data is supported');
+                }
+                handleCaller(request, response);
+            });
+            break;
+        default:
+            handleCaller(request, response);
+            break;
+    }
 
 });
 

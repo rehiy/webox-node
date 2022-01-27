@@ -19,7 +19,7 @@ function call(request, response) {
     M_prepare.handle(request, response);
 
     let filename = request.filename;
-    let pathname = request.objectUrl.pathname;
+    let pathname = request.requestURL.pathname;
 
     for (let { route, handle } of handlers) {
 

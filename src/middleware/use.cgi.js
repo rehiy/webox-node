@@ -10,7 +10,7 @@ let { httpMessage } = require('../helper/utils');
  * @param {string} f filename
  * @returns 是否调用处理函数
  */
- function route(p, f) {
+function route(p, f) {
     return f && /\.cgi(\.js)?$/.test(f);
 }
 
@@ -21,11 +21,11 @@ let { httpMessage } = require('../helper/utils');
  */
 function handle(request, response) {
 
-    let { filename, objectUrl } = request;
+    let { filename, requestURL } = request;
 
     let text = '';
 
-    let args = objectUrl.search.replace(/^\?/, '').replace(/&/g, ' ');
+    let args = requestURL.search.replace(/^\?/, '').replace(/&/g, ' ');
 
     let child = exec(`${process.argv0} ${filename} ${args}`, {
         windowsHide: true,

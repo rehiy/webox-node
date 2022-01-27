@@ -13,11 +13,11 @@ let { httpMessage, logger } = require('../helper/utils');
  */
 function handle(request, response) {
 
-    let { filename, objectUrl } = request;
+    let { filename, requestURL } = request;
 
     //找不到文件
     if (filename === '') {
-        httpMessage(response, objectUrl.pathname, 404);
+        httpMessage(response, requestURL.pathname, 404);
         return true;
     }
 
@@ -26,12 +26,12 @@ function handle(request, response) {
         'Content-Type': getMimeType(filename)
     });
 
-    logger(1, 'Send static file:', filename);
+    logger(1, 'Send Static File:', filename);
 
     //流式发送文件
     fs.createReadStream(filename)
         .on('error', err => {
-            httpMessage(response, objectUrl.pathname, 503);
+            httpMessage(response, requestURL.pathname, 503);
         })
         .on('data', chunk => {
             response.write(chunk);
