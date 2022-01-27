@@ -1,7 +1,7 @@
 let fs = require('fs');
 let path = require('path');
 
-let { WEBOX_ROOT, WEBOX_INDEX } = require('../helper/config');
+let config = require('../helper/config');
 
 /////////////////////////////////////////////////////////////
 
@@ -27,7 +27,7 @@ function handle(request, response) {
 
     let requestURL = new URL(request.url, `http://${request.headers.host}`);
 
-    let filename = path.join(WEBOX_ROOT, requestURL.pathname);
+    let filename = path.join(config.WEBOX_ROOT, requestURL.pathname);
 
     //添加基础属性
     request.filename = '';
@@ -41,7 +41,7 @@ function handle(request, response) {
     }
 
     //尝试返回默认首页
-    for (let index of WEBOX_INDEX) {
+    for (let index of config.WEBOX_INDEX) {
         let file = fixpath(filename, index);
         if (fs.existsSync(file)) {
             request.filename = file;

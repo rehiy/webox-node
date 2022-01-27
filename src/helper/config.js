@@ -1,5 +1,4 @@
 let fs = require('fs');
-let path = require('path');
 
 // 加载用户配置
 
@@ -12,7 +11,7 @@ if (CF && fs.existsSync(CF)) {
 
 // 合并配置参数
 
-config = Object.assign({
+module.exports = Object.assign({
 
     // production or development
     WEBOX_MODE: process.env.NODE_ENV || 'development',
@@ -40,12 +39,3 @@ config = Object.assign({
     WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
 
 }, config);
-
-// 解析脚本目录
-
-config.WEBOX_ROOT = path.resolve(
-    config.WEBOX_ROOT
-);
-
-// 导出配置
-module.exports = config;

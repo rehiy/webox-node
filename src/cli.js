@@ -4,7 +4,7 @@
  * @Website http://www.rehiy.com/webox
  */
 
-let config = require('./helper/config');
+let config = {};
 
 let params = process.argv.slice(2);
 let listen = params[0] ? params[0].split(':') : [];
@@ -25,4 +25,4 @@ if (params[1]) {
 
 let app = require('./main');
 
-app.init();
+app.init(config);

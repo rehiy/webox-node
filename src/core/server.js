@@ -1,6 +1,7 @@
+let path = require('path');
 let http = require('http');
 
-let { WEBOX_HOST, WEBOX_PORT, WEBOX_ROOT } = require('../helper/config');
+let config = require('../helper/config');
 
 let { logger } = require('../helper/utils');
 
@@ -38,28 +39,32 @@ let httpServer = http.createServer((request, response) => {
 httpServer.on('error', err => {
 
     if (err.code === 'EADDRINUSE') {
-        logger(0, 'IP-Port in use:', WEBOX_HOST, WEBOX_PORT);
-        logger(0, 'Failover to:', WEBOX_HOST, ++WEBOX_PORT, '\n');
-        httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
+        logger(0, 'IP-Port in use:', config.WEBOX_HOST, config.WEBOX_PORT);
+        logger(0, 'Failover to:', config.WEBOX_HOST, ++config.WEBOX_PORT, '\n');
+        httpServer.listen(config.WEBOX_PORT, config.WEBOX_HOST, 1024);
     }
 
 });
 
 httpServer.on('listening', () => {
 
-    let host = WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : WEBOX_HOST;
-    let port = WEBOX_PORT - 80 === 0 ? '' : ':' + WEBOX_PORT;
+    let host = config.WEBOX_HOST === '0.0.0.0' ? '127.0.0.1' : config.WEBOX_HOST;
+    let port = config.WEBOX_PORT - 80 === 0 ? '' : ':' + config.WEBOX_PORT;
 
     logger(0, 'Server started:', 'http://' + host + port);
-    logger(0, 'Root Directory:', WEBOX_ROOT, '\n');
+    logger(0, 'Root Directory:', config.WEBOX_ROOT, '\n');
 
 });
 
 /////////////////////////////////////////////////////////////
 // start server
 
-module.exports = function () {
+module.exports = function (options) {
 
-    httpServer.listen(WEBOX_PORT, WEBOX_HOST, 1024);
+    options && Object.assign(config, options);
+
+    config.WEBOX_ROOT = path.resolve(config.WEBOX_ROOT);
+
+    httpServer.listen(config.WEBOX_PORT, config.WEBOX_HOST, 1024);
 
 };
