@@ -36,6 +36,6 @@ module.exports = Object.assign({
         503: 'Service Unavilable: %s'
     },
 
-    WEBOX_CHECK_API: 'https://api.vmlu.com/webox/?platform=node'
+    WEBOX_CHECK_API: 'aHR0cHM6Ly9hcGkudm1sdS5jb20vd2Vib3gvP3BsYXRmb3JtPW5vZGU='
 
 }, config);
