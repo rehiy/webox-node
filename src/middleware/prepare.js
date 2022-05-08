@@ -54,6 +54,6 @@ function handle(request, response) {
 /////////////////////////////////////////////////////////////
 
 module.exports = {
-    route: '*',
-    handle: handle
+    handle: handle,
+    route: '*'
 };
