@@ -4,9 +4,8 @@ let fs = require('fs');
 
 let config = {};
 
-let CF = process.env.WEBOX_CONF_FILE;
-if (CF && fs.existsSync(CF)) {
-    config = require(CF);
+if (process.env.WEBOX_CONF_FILE) {
+    config = require(process.env.WEBOX_CONF_FILE);
 }
 
 // 合并配置参数
