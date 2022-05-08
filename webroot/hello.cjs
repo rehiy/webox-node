@@ -1,3 +1,3 @@
-module.exports = function (obj, next) {
-    next({ file: 'hello.cjs', obj }, 200);
+module.exports = function (input, next) {
+    next({ file: 'hello.cjs', input }, 200);
 };
