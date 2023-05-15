@@ -1,15 +1,14 @@
 {
     "name": "webox-node",
-    "description": "Webox-node is a simple HTTP server. Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.",
-    "homepage": "https://github.com/rehiy/webox-node",
     "version": "3.3.12",
-    "license": "MIT License",
-    "private": true,
     "author": {
         "name": "Rehiy Wang",
         "email": "wang@rehiy.com",
-        "url": "http://www.rehiy.com/"
+        "url": "http://www.rehiy.com"
     },
+    "homepage": "https://github.com/rehiy/webox-node",
+    "description": "Webox-node is a simple HTTP server. Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.",
+    "license": "MIT License",
     "keywords": [
         "mini",
         "simple",
@@ -18,15 +17,16 @@
         "server",
         "webox"
     ],
+    "private": true,
     "repository": {
         "type": "git",
         "url": "git://github.com/rehiy/webox-node.git"
     },
     "scripts": {
         "start": "nodemon src/cli.js",
-        "build": "rollup -c scripts/rollup.js",
+        "build": "rollup -c scripts/build.js",
         "postbuild": "node scripts/version.js",
-        "lint": "eslint"
+        "lint": "eslint src"
     },
     "dependencies": {},
     "devDependencies": {
