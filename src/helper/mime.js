@@ -169,6 +169,8 @@ let mime = {
     'mf': 'text/cache-manifest'
 };
 
+/////////////////////////////////////////////////////////////
+
 module.exports = function (file) {
     let ext = path.extname(file);
     ext = ext ? ext.slice(1) : 'unknown';

@@ -108,6 +108,8 @@ if (console.light === undefined) {
     console.light = Function;
 }
 
+/////////////////////////////////////////////////////////////
+
 module.exports = {
     logger: logger,
     parseJSON: parseJSON,
