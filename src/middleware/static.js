@@ -1,7 +1,6 @@
 let fs = require('fs');
 
 let getMimeType = require('../helper/mime');
-
 let { httpMessage, logger } = require('../helper/utils');
 
 /////////////////////////////////////////////////////////////

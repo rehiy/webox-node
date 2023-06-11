@@ -2,8 +2,7 @@ let http = require('http');
 let path = require('path');
 
 let config = require('../helper/config');
-
-let { logger } = require('../helper/utils');
+let { logger, parseJSON } = require('../helper/utils');
 
 let handleCaller = require('./handle').call;
 
@@ -21,9 +20,8 @@ let httpServer = http.createServer((request, response) => {
                 body += data
             });
             request.addListener('end', () => {
-                try {
-                    request.postData = JSON.parse(body);
-                } catch (e) {
+                request.postData = parseJSON(body);
+                if (request.postData === undefined) {
                     logger(0, 'POST Error: Only JSON data is supported');
                 }
                 handleCaller(request, response);
