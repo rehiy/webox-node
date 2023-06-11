@@ -4,13 +4,13 @@ Webox-node can execute js file through node-cli, just like CGI. It can also load
 
 ## install
 
-```js
+```shell
 npm i webox-node
 ```
 
 ## simple start
 
-```js
+```shell
 npx webox
 ```
 
@@ -18,7 +18,7 @@ The web server will listen on `127.0.0.1:80` and use `./webroot` as the root dir
 
 ## publish your website
 
-```js
+```shell
 npx webox 0.0.0.0:80 public
 ```
 
@@ -42,7 +42,7 @@ Set `process.env.WEBOX_EXIT_CODE` to `1`, Even if the program exits normally, an
 
 Please set `process.env.WEBOX_CONF_FILE` to config file path.
 
-```
+```js
 module.exports = {
 
     WEBOX_MODE: 'development',
@@ -68,5 +68,4 @@ module.exports = {
     }
 
 };
-
 ```
