@@ -91,12 +91,11 @@ function httpMessage(response, output, code, mime) {
     }
 
     response.writeHead(code, {
-        'Content-Length': output.length,
+        'Content-Length': Buffer.byteLength(output),
         'Content-Type': mime
     });
 
-    response.write(output);
-    response.end();
+    response.end(output);
 
 }
 
