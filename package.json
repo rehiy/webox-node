@@ -1,49 +1,50 @@
 {
-    "name": "webox-node",
-    "version": "3.3.12",
-    "author": {
-        "name": "Rehiy Wang",
-        "email": "wang@rehiy.com",
-        "url": "http://www.rehiy.com"
-    },
-    "homepage": "https://github.com/rehiy/webox-node",
-    "description": "Webox-node is a simple HTTP server. Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.",
-    "license": "MIT License",
-    "keywords": [
-        "mini",
-        "simple",
-        "http",
-        "web",
-        "server",
-        "webox"
-    ],
-    "private": true,
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/rehiy/webox-node.git"
-    },
-    "scripts": {
-        "start": "nodemon src/cli.js",
-        "build": "rollup -c scripts/build.js",
-        "postbuild": "node scripts/version.js",
-        "lint": "eslint src"
-    },
-    "dependencies": {},
-    "devDependencies": {
-        "@rollup/plugin-commonjs": "^19.0.1",
-        "@rollup/plugin-node-resolve": "^13.0.2",
-        "eslint": "^7.31.0",
-        "eslint-plugin-import": "^2.23.4",
-        "eslint-plugin-jsdoc": "^35.4.5",
-        "eslint-plugin-prefer-arrow": "^1.2.3",
-        "nodemon": "~2.0.12",
-        "rollup": "^2.53.2",
-        "rollup-plugin-copy": "^3.4.0",
-        "rollup-plugin-terser": "7.0.2",
-        "shelljs": "^0.8.4"
-    },
-    "main": "./src/main.js",
-    "bin": {
-        "webox": "./src/cli.js"
-    }
+  "name": "webox-node",
+  "version": "3.3.13",
+  "author": {
+    "name": "Rehiy Wang",
+    "email": "wang@rehiy.com",
+    "url": "http://www.rehiy.com"
+  },
+  "homepage": "https://github.com/rehiy/webox-node",
+  "description": "Webox-node is a simple HTTP server. Webox-node can execute js file through node-cli, just like CGI. It can also load js file as commonjs module, just like PHP and ASP.",
+  "license": "MIT License",
+  "keywords": [
+    "mini",
+    "simple",
+    "http",
+    "web",
+    "server",
+    "webox"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rehiy/webox-node.git"
+  },
+  "scripts": {
+    "start": "nodemon src/cli.js",
+    "build": "rollup -c scripts/rollup.js",
+    "postbuild": "node scripts/version.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-run": "^3.0.1",
+    "@rollup/plugin-terser": "^0.4.3",
+    "eslint": "^8.42.0",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^2.0.22",
+    "rollup": "^3.25.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "shelljs": "^0.8.5"
+  },
+  "main": "./src/main.js",
+  "bin": {
+    "webox": "./src/cli.js"
+  }
 }

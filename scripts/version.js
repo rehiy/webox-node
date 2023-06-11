@@ -1,6 +1,6 @@
 let fs = require('fs');
 
-let package = require('../package.json');
+let pkg = require('../package.json');
 
 //////////////////////////////////////////////////////////////////////
 
