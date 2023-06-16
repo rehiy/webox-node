@@ -69,6 +69,26 @@ function parseJSON(str) {
 }
 
 /**
+ * 页面重定向
+ * @param {http.ServerResponse} response 响应对象
+ * @param {string } url 重定向地址
+ */
+
+function httpRedirect(response, url) {
+
+    if (response.writableEnded) {
+        logger(1, 'Response has already been sent, ignore redirect:', url);
+    }
+
+    response.writeHead(302, {
+        'Location': url
+    });
+
+    response.end();
+
+}
+
+/**
  * 输出HTTP消息
  * @param {http.ServerResponse} response 响应对象
  * @param {string | object} output 输出内容
@@ -88,6 +108,10 @@ function httpMessage(response, output, code, mime) {
 
     if (mime == 'text/plain' && config.WEBOX_ERROR[code]) {
         output = config.WEBOX_ERROR[code].replace('%s', output);
+    }
+
+    if (response.writableEnded) {
+        logger(1, 'Response has already been sent, ignore it.', output);
     }
 
     response.writeHead(code, {
@@ -113,5 +137,6 @@ module.exports = {
     logger: logger,
     parseJSON: parseJSON,
     dateFormat: dateFormat,
+    httpRedirect: httpRedirect,
     httpMessage: httpMessage
 };
