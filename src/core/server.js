@@ -13,24 +13,26 @@ let httpServer = http.createServer((request, response) => {
 
     logger(1, request.method, '-', request.url);
 
-    switch (request.method) {
-        case 'POST':
-            let body = '';
-            request.addListener('data', data => {
-                body += data
-            });
-            request.addListener('end', () => {
-                request.postData = parseJSON(body);
-                if (request.postData === undefined) {
-                    logger(0, 'POST Error: Only JSON data is supported');
-                }
-                handleCaller(request, response);
-            });
-            break;
-        default:
-            handleCaller(request, response);
-            break;
+    if (request.method == 'GET') {
+        handleCaller(request, response);
+        return;
     }
+
+    let body = '';
+
+    request.addListener('data', data => {
+        body += data
+    });
+
+    request.addListener('end', () => {
+        if (body) {
+            request.bodyObject = parseJSON(body);
+            if (request.bodyObject === undefined) {
+                logger(0, 'Error: Only JSON body is supported');
+            }
+        }
+        handleCaller(request, response);
+    });
 
 });
 
