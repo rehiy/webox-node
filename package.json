@@ -1,6 +1,6 @@
 {
   "name": "webox-node",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "author": {
     "name": "Rehiy Wang",
     "email": "wang@rehiy.com",
@@ -30,17 +30,17 @@
     "lint:fix": "eslint --fix src"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.1",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "@rollup/plugin-replace": "^5.0.2",
-    "@rollup/plugin-run": "^3.0.1",
-    "@rollup/plugin-terser": "^0.4.3",
-    "eslint": "^8.42.0",
-    "eslint-plugin-import": "^2.27.5",
-    "nodemon": "^2.0.22",
-    "rollup": "^3.25.0",
-    "rollup-plugin-copy": "^3.4.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-run": "^3.1.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "eslint": "^9.17.0",
+    "eslint-plugin-import": "^2.31.0",
+    "nodemon": "^3.1.9",
+    "rollup": "^4.29.1",
+    "rollup-plugin-copy": "^3.5.0",
     "shelljs": "^0.8.5"
   },
   "main": "./src/main.js",

@@ -19,16 +19,18 @@ let httpServer = http.createServer((request, response) => {
     }
 
     let body = '';
-
     request.addListener('data', data => {
         body += data
     });
 
     request.addListener('end', () => {
         if (body) {
-            request.bodyObject = parseJSON(body);
-            if (request.bodyObject === undefined) {
-                logger(0, 'Error: Only JSON body is supported');
+            request.bodyString = body;
+            if (request.headers['content-type'] === 'application/json') {
+                request.bodyObject = parseJSON(body);
+                if (request.bodyObject === undefined) {
+                    logger(0, 'Error: Only JSON body is supported');
+                }
             }
         }
         handleCaller(request, response);
